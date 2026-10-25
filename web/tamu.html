@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daftar Tamu · Raditya & Anindya</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#F3EFE6;--card:#FCFAF5;--ink:#1F2A22;--muted:#5D6A5F;--line:#DDD8CB;--leaf:#3F6B49;--rose:#D27D72}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Plus Jakarta Sans",system-ui,sans-serif;padding:32px 16px}
+main{max-width:900px;margin:0 auto;display:grid;gap:20px}h1{font:400 40px/1.1 Gloock,Georgia,serif;margin:0}
+.card{background:var(--card);border-radius:20px;padding:22px;display:grid;gap:12px}label{font-weight:600;font-size:13px}
+input,textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff}textarea{min-height:140px}
+.muted{color:var(--muted);font-size:13px}button{font:inherit;font-weight:600;border:0;border-radius:999px;padding:9px 16px;background:var(--ink);color:#fff;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.wrap{overflow-x:auto}code,pre{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}pre{background:#1F2A22;color:#E8EEE3;padding:14px;border-radius:12px;white-space:pre-wrap;margin:0}
+.link{word-break:break-all;color:var(--leaf)}.row{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<main>
+  <div><p class="muted">Untuk mempelai · jangan dibagikan</p><h1>Daftar tamu &amp; link undangan</h1></div>
+  <div class="card">
+    <label for="base">Alamat website undangan</label>
+    <input id="base" placeholder="https://raditya-anindya.vercel.app">
+    <label for="names">Nama tamu (satu per baris)</label>
+    <textarea id="names">Nova
+B&amp;B
+OISHI</textarea>
+    <label for="tpl">Pesan WhatsApp</label>
+    <textarea id="tpl" style="min-height:110px">Assalamualaikum {nama},
+Dengan penuh sukacita kami mengundang Anda ke pernikahan kami, Raditya & Anindya, Sabtu 12 Desember 2026 di Taman Kenanga, Bandung.
+Undangan lengkap: {link}</textarea>
+  </div>
+  <div class="card">
+    <div class="wrap"><table><thead><tr><th>Nama</th><th>Link</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+  </div>
+  <div class="card">
+    <strong>SQL untuk menambah tamu ke Supabase</strong>
+    <p class="muted">Salin lalu jalankan di Supabase → SQL Editor, supaya nama tamu tampil persis seperti yang kamu tulis.</p>
+    <pre id="sql"></pre>
+    <div><button id="copySql" type="button">Salin SQL</button></div>
+  </div>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+try{ $('#base').value = localStorage.getItem('base') || location.origin.replace(/\/$/,'') || ''; }catch(_){ $('#base').value = location.origin; }
+const slugify=n=>n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/&/g,'n').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'tamu';
+function copy(t){ navigator.clipboard.writeText(t).catch(()=>prompt('Salin:',t)); }
+function render(){
+  const base=$('#base').value.trim().replace(/\/$/,''); try{localStorage.setItem('base',base)}catch(_){}
+  const names=$('#names').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  const seen={}; const list=names.map(n=>{ let s=slugify(n); if(seen[s]) s+='-'+(++seen[s]); else seen[s]=1; return {n,s,link:`${base}/?to=${s}`}; });
+  const tb=$('#rows'); tb.textContent='';
+  list.forEach(g=>{ const tr=document.createElement('tr');
+    const a=document.createElement('td'); a.textContent=g.n;
+    const b=document.createElement('td'); b.className='link'; b.textContent=g.link;
+    const c=document.createElement('td'); c.className='row';
+    const b1=document.createElement('button'); b1.className='ghost'; b1.textContent='Salin link'; b1.onclick=()=>copy(g.link);
+    const msg=$('#tpl').value.replaceAll('{nama}',g.n).replaceAll('{link}',g.link);
+    const b2=document.createElement('button'); b2.textContent='Kirim WA'; b2.onclick=()=>window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+    c.append(b1,b2); tr.append(a,b,c); tb.appendChild(tr); });
+  const esc=s=>s.replace(/'/g,"''");
+  $('#sql').textContent = list.length ? 'insert into public.guests (slug, name) values\n' + list.map(g=>`  ('${g.s}', '${esc(g.n)}')`).join(',\n') + '\non conflict (slug) do update set name = excluded.name;' : '-- tulis nama tamu dulu';
+}
+['base','names','tpl'].forEach(id=>$('#'+id).addEventListener('input',render));
+$('#copySql').onclick=()=>copy($('#sql').textContent);
+render();
+</script>
+</body>
+</html>
