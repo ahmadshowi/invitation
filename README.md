@@ -28,13 +28,19 @@ supabase/
    ```
    Anon key memang aman ditaruh di website publik. Isi database dijaga oleh aturan RLS di `schema.sql`: tamu hanya bisa menambah ucapan dan membacanya, tidak bisa mengubah atau menghapus, dan tidak bisa melihat daftar tamu lain.
 
-## 2. Deploy (pilih salah satu)
-Isi folder `web/` adalah file statis biasa, tanpa proses build.
+## 2. Deploy
+Kode situs ada di `web/`, sedangkan `package.json`, `vite.config.mjs`, dan `vercel.json` ada di root. `npm run build` menghasilkan folder `dist/` (halaman, bundle three.js, dan seluruh isi `web/assets` + `config.js`).
 
-- **Netlify Drop:** buka https://app.netlify.com/drop, lalu seret folder `web` ke halaman itu. Selesai.
-- **Vercel:** `npm i -g vercel`, lalu `cd web` dan `vercel --prod`. Atau upload lewat GitHub dengan Root Directory `web`.
-- **GitHub Pages:** push repo, buka Settings → Pages, lalu pilih folder `/web`. Alternatifnya, pindahkan isi `web` ke root.
-- **Cloudflare Pages:** Create project → Direct upload → pilih folder `web`.
+```bash
+npm install
+npm run dev      # lokal, buka alamat yang muncul
+npm run build    # hasil di dist/
+npm run preview  # cek hasil build
+```
+
+**Vercel (dari GitHub):** Import repo dengan Root Directory `./` (root repo, bukan `web`). Pengaturan build sudah ditulis di `vercel.json` (Install `npm ci`, Build `npm run build`, Output `dist`), jadi biarkan kolom override kosong.
+
+Supabase bisa diisi di `web/config.js`, atau lewat Environment Variables Vercel `VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON_KEY` (lihat `.env.example`). Kalau keduanya diisi, nilai env yang dipakai. Hanya anon key yang boleh dipakai, jangan service_role key.
 
 ## 3. Link untuk tamu
 Format link: `https://domainmu/?to=nova`. Nama tamu muncul di sampul ("Kepada Yth. Nova") dan otomatis terisi di formulir RSVP.

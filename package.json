@@ -2,10 +2,10 @@
   "name": "undangan-showi-fasya",
   "version": "1.0.0",
   "description": "Website undangan dengan taman 3D (Three.js), RSVP & ucapan tersimpan di **Supabase**, dan link personal untuk tiap tamu.",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite web --host 0.0.0.0"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +16,9 @@
   },
   "dependencies": {
     "three": "0.160.0"
-  }
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "private": true
 }
