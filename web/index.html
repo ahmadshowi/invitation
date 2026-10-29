@@ -1624,13 +1624,15 @@ tick(); setInterval(tick,1000);
 function copy(text){ const fb=()=>{ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); toast('Tersalin');}catch(_){toast(text);} ta.remove(); }; try{ navigator.clipboard.writeText(text).then(()=>toast('Tersalin'),fb); }catch(_){ fb(); } }
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-copy]'); if(b) copy(b.dataset.copy); });
 
-/* --- music: plays assets/musik.mp3 when present, fading in softly --- */
+/* --- music: plays assets/musik.mp3 when present, fading in softly ---
+   iOS Safari and in-app browsers won't buffer audio before a tap, so the button can't wait for canplay;
+   a HEAD request decides whether it shows, and play() runs straight from the tap. */
 let musicOn=false, audioEl=null, fadeT=null;
 const mBtn=$('#music'); mBtn.hidden=true;
 function sync(){ mBtn.classList.toggle('playing',musicOn); mBtn.setAttribute('aria-pressed',musicOn); mBtn.setAttribute('aria-label',musicOn?'Hentikan musik':'Putar musik'); }
 function startMusic(){ if(!audioEl) return; clearInterval(fadeT); audioEl.volume=0; audioEl.play().then(()=>{ musicOn=true; sync(); fadeT=setInterval(()=>{ audioEl.volume=Math.min(.75,audioEl.volume+.03); if(audioEl.volume>=.75) clearInterval(fadeT); },80); }).catch(()=>{}); }
 function stopMusic(){ clearInterval(fadeT); if(audioEl) audioEl.pause(); musicOn=false; sync(); }
-{ const a=new Audio(); a.loop=true; a.preload='auto'; a.addEventListener('canplay',()=>{ if(!audioEl){ audioEl=a; mBtn.hidden=false; } },{once:true}); a.src='assets/musik.mp3'; }
+{ const src='assets/musik.mp3'; fetch(src,{method:'HEAD'}).then(r=>{ if(!r.ok) return; audioEl=new Audio(src); audioEl.loop=true; audioEl.preload='metadata'; mBtn.hidden=false; }).catch(()=>{}); }
 mBtn.onclick=()=>musicOn?stopMusic():startMusic();
 
 /* --- smooth scroll: Lenis when available, native otherwise --- */
@@ -1643,6 +1645,7 @@ if(window.Lenis && !reduce){
 }
 function goTo(el){ if(lenis) lenis.scrollTo(el,{duration:1.8,easing:t=>1-Math.pow(1-t,4)}); else el.scrollIntoView({behavior:reduce?'auto':'smooth'}); }
 document.addEventListener('click',e=>{ const a=e.target.closest('a[href^="#"]'); if(!a) return; const id=a.getAttribute('href').slice(1); const el=id==='top'?document.body:document.getElementById(id); if(!el) return; e.preventDefault(); goTo(el); });
+$('#tourSkip').addEventListener('click',()=>{ if(!musicOn) startMusic(); });
 $('#openBtn').onclick=()=>{ if(!musicOn) startMusic(); goTo(document.querySelectorAll('.ch')[1]); };
 
 /* --- nav reads light over the garden, paper-backed below it --- */
