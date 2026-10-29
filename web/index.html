@@ -8,7 +8,7 @@
 <title>Rayana &amp; Hasna</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..700&family=Jost:wght@300;400;500;600&display=swap">
 <style>
 /* Editorial wedding stationery: olive, cream and blush on paper. A cinematic walk through the 3D garden, then chapters reveal over it on scroll. */
 :root{
@@ -16,22 +16,25 @@
   --olive:#8F8E52; --olive-d:#66653A; --olive-dd:#4B4A2A; --night:#2C2B1B;
   --ink:#33321F; --muted:#6E6C51; --line:rgba(75,74,42,.16); --line-2:rgba(75,74,42,.32);
   --blush:#E9CFC8; --blush-d:#D4B3A8; --rose:#A9786B;
-  --f-display:"Bodoni Moda", Didot, "Bodoni 72", Georgia, serif;
+  --f-display:"Playfair Display", Georgia, "Times New Roman", serif;
   --f-body:Jost, "Helvetica Neue", system-ui, sans-serif;
   --ease:cubic-bezier(.22,1,.36,1);
   color-scheme:light;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+/* Playfair defaults to old-style figures and the `font:` shorthand resets numeric variants, so force lining digits */
+body *{font-variant-numeric:lining-nums!important}
+.count b,.tally b,.gcard .num,.cal{font-variant-numeric:lining-nums tabular-nums!important}
 html{-webkit-text-size-adjust:100%}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-stopped{overflow:hidden}
-body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-weight:500;font-size:16px;line-height:1.75;margin:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{background:var(--paper);font-variant-numeric:lining-nums;color:var(--ink);font-family:var(--f-body);font-weight:500;font-size:16px;line-height:1.75;margin:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 html:has(body.touring),body.touring{overflow:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
-h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.04;letter-spacing:-.012em;text-wrap:balance;margin:0}
-h2 em,h3 em{color:var(--olive);font-weight:500}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;font-variant-numeric:lining-nums;line-height:1.04;letter-spacing:-.012em;text-wrap:balance;margin:0}
+h2 em,h3 em{color:var(--olive);font-weight:600}
 p{margin:0}
 a{color:inherit}
 button,input,textarea{font:inherit;color:inherit}
@@ -147,7 +150,7 @@ button,input,textarea{font:inherit;color:inherit}
 .ch.hero{justify-content:center;text-align:center}
 .ch.hero .card{max-width:680px;margin:0 auto;justify-items:center;gap:28px}
 .ch.hero .card::before{inset:-40px -110px}
-.names{font-family:var(--f-display);font-weight:600;font-size:clamp(60px,9.4vw,132px);line-height:.9;letter-spacing:-.025em;display:grid;justify-items:center}
+.names{font-family:var(--f-display);font-weight:700;font-size:clamp(60px,9.4vw,132px);line-height:.9;letter-spacing:-.025em;display:grid;justify-items:center}
 .names em{font-size:.4em;color:var(--olive);margin:.22em 0 .14em;letter-spacing:0}
 .date{display:flex;align-items:center;gap:18px;font-size:12px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:#FFF7EA}
 .date i{width:30px;height:1px;background:rgba(255,237,210,.6)}
@@ -1129,9 +1132,9 @@ function drawSign() {
   const c = signTex.userData.ctx, w = 640, h = 860;
   c.fillStyle = '#F7EBD6'; c.fillRect(0, 0, w, h); c.strokeStyle = '#8F8E52'; c.lineWidth = 2; c.strokeRect(30, 30, w - 60, h - 60); c.strokeRect(40, 40, w - 80, h - 80);
   c.textAlign = 'center'; c.fillStyle = '#6E6C51'; c.font = '500 22px Jost, sans-serif'; c.fillText('S E L A M A T   D A T A N G', w / 2, 200);
-  c.font = 'italic 400 34px "Bodoni Moda", Didot, serif'; c.fillText('di pernikahan', w / 2, 262);
-  c.fillStyle = '#4B4A2A'; c.font = '600 108px "Bodoni Moda", Didot, serif'; c.fillText('Rayana', w / 2, 420); c.fillText('Hasna', w / 2, 600);
-  c.fillStyle = '#8F8E52'; c.font = 'italic 400 68px "Bodoni Moda", Didot, serif'; c.fillText('&', w / 2, 504);
+  c.font = 'italic 400 34px "Playfair Display", Georgia, serif'; c.fillText('di pernikahan', w / 2, 262);
+  c.fillStyle = '#4B4A2A'; c.font = '600 108px "Playfair Display", Georgia, serif'; c.fillText('Rayana', w / 2, 420); c.fillText('Hasna', w / 2, 600);
+  c.fillStyle = '#8F8E52'; c.font = 'italic 400 68px "Playfair Display", Georgia, serif'; c.fillText('&', w / 2, 504);
   c.fillStyle = '#6E6C51'; c.font = '500 22px Jost, sans-serif'; c.fillText('2 6  ·  X I I  ·  2 0 2 6', w / 2, 700); signTex.needsUpdate = true;
 }
 drawSign();
@@ -1158,7 +1161,7 @@ at(20.4, 0, -2.75, Math.PI / 2 - .5, () => {
 
 /* ---------- guest book desk ---------- */
 const bookSignTex = canvasTex(320, 420, () => {});
-function drawBookSign() { const c = bookSignTex.userData.ctx; c.fillStyle = '#F7EBD6'; c.fillRect(0, 0, 320, 420); c.strokeStyle = '#8F8E52'; c.lineWidth = 2; c.strokeRect(18, 18, 284, 384); c.textAlign = 'center'; c.fillStyle = '#6E6C51'; c.font = '500 16px Jost, sans-serif'; c.fillText('B U K U   T A M U', 160, 150); c.fillStyle = '#4B4A2A'; c.font = '600 64px "Bodoni Moda", Didot, serif'; c.fillText('R', 112, 250); c.fillText('H', 208, 250); c.fillStyle = '#8F8E52'; c.font = 'italic 400 48px "Bodoni Moda", Didot, serif'; c.fillText('&', 160, 246); bookSignTex.needsUpdate = true; }
+function drawBookSign() { const c = bookSignTex.userData.ctx; c.fillStyle = '#F7EBD6'; c.fillRect(0, 0, 320, 420); c.strokeStyle = '#8F8E52'; c.lineWidth = 2; c.strokeRect(18, 18, 284, 384); c.textAlign = 'center'; c.fillStyle = '#6E6C51'; c.font = '500 16px Jost, sans-serif'; c.fillText('B U K U   T A M U', 160, 150); c.fillStyle = '#4B4A2A'; c.font = '600 64px "Playfair Display", Georgia, serif'; c.fillText('R', 112, 250); c.fillText('H', 208, 250); c.fillStyle = '#8F8E52'; c.font = 'italic 400 48px "Playfair Display", Georgia, serif'; c.fillText('&', 160, 246); bookSignTex.needsUpdate = true; }
 drawBookSign();
 at(DESK.x, 0, DESK.z, Math.PI, () => {
   put(M.wood, BOX, 0, .78, 0, 0, 0, 0, 1.9, .06, .8);
@@ -1228,7 +1231,7 @@ function drawDuo() {
   c.fillStyle = g; c.fillRect(0, 0, w, h);
   c.filter = 'blur(60px)'; c.fillStyle = 'rgba(255,244,230,.85)'; c.beginPath(); c.arc(410, 240, 170, 0, 7); c.fill();
   c.fillStyle = 'rgba(102,101,58,.55)'; c.beginPath(); c.ellipse(220, 760, 380, 150, 0, 0, 7); c.fill(); c.filter = 'none';
-  c.textAlign = 'center'; c.fillStyle = '#FFF7EA'; c.font = 'italic 400 148px "Bodoni Moda", Didot, serif'; c.fillText('R & H', w / 2, 470);
+  c.textAlign = 'center'; c.fillStyle = '#FFF7EA'; c.font = 'italic 400 148px "Playfair Display", Georgia, serif'; c.fillText('R & H', w / 2, 470);
   c.font = '500 19px Jost, sans-serif'; c.fillStyle = 'rgba(255,247,234,.85)'; c.fillText('F O T O   B E R D U A', w / 2, 540);
   duoPH.needsUpdate = true;
 }
@@ -1271,7 +1274,7 @@ TL.load('assets/foto-berdua.jpg', tex => {
 
 /* ---------- photo booth ---------- */
 const neonTex = canvasTex(1024, 220, () => {});
-function drawNeon() { const c = neonTex.userData.ctx; c.clearRect(0, 0, 1024, 220); c.font = 'italic 400 104px "Bodoni Moda", Didot, serif'; c.textAlign = 'center'; c.fillStyle = '#FFF1DE'; c.shadowColor = '#F2C9B8'; c.shadowBlur = 26; c.fillText('Rayana & Hasna', 512, 145); neonTex.needsUpdate = true; }
+function drawNeon() { const c = neonTex.userData.ctx; c.clearRect(0, 0, 1024, 220); c.font = 'italic 400 104px "Playfair Display", Georgia, serif'; c.textAlign = 'center'; c.fillStyle = '#FFF1DE'; c.shadowColor = '#F2C9B8'; c.shadowBlur = 26; c.fillText('Rayana & Hasna', 512, 145); neonTex.needsUpdate = true; }
 drawNeon();
 at(BOOTH.x, 0, BOOTH.z, Math.PI / 4, () => {
   hedge(0, 0, 4.4, .45, 3.0);
@@ -1446,7 +1449,7 @@ leaves.build(leafMat); shrubs.build(smallLeafMat); blooms.build(bloomMat, false)
 for (const [list, mt] of [[seats.white, M.chairWhite], [seats.wood, M.wood]]) for (const [g, m] of [[chairG, mt], [cushionG, M.ivory]]) {
   const im = new THREE.InstancedMesh(g, m, list.length); list.forEach((x, i) => im.setMatrixAt(i, x)); im.castShadow = im.receiveShadow = true; scene.add(im);
 }
-document.fonts && Promise.all(['600 80px "Bodoni Moda"', 'italic 400 80px "Bodoni Moda"', '500 20px Jost'].map(f => document.fonts.load(f))).then(() => { drawSign(); drawBookSign(); drawNeon(); drawDuo(); }).catch(() => {});
+document.fonts && Promise.all(['600 80px "Playfair Display"', 'italic 400 80px "Playfair Display"', '500 20px Jost'].map(f => document.fonts.load(f))).then(() => { drawSign(); drawBookSign(); drawNeon(); drawDuo(); }).catch(() => {});
 
 /* ---------- camera rig ---------- */
 const chEls = [...document.querySelectorAll('.ch')];
@@ -1591,11 +1594,11 @@ function toast(m){ toastEl.textContent = m; toastEl.hidden = false; clearTimeout
 
 /* --- images (illustrated placeholders; replace with assets/*.jpg) --- */
 function svgURI(s){ return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s); }
-function portrait(letter, a, b){ return svgURI(`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .25 0 0 0 0 .22 0 0 0 0 .12 0 0 0 .09 0"/></filter></defs><rect width="300" height="400" fill="url(#g)"/><rect width="300" height="400" filter="url(#n)"/><text x="150" y="262" text-anchor="middle" font-family="Didot, 'Bodoni 72', 'Bodoni Moda', Georgia, serif" font-style="italic" font-size="168" fill="#FFF7EA" fill-opacity=".9">${letter}</text></svg>`); }
+function portrait(letter, a, b){ return svgURI(`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .25 0 0 0 0 .22 0 0 0 0 .12 0 0 0 .09 0"/></filter></defs><rect width="300" height="400" fill="url(#g)"/><rect width="300" height="400" filter="url(#n)"/><text x="150" y="262" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="168" fill="#FFF7EA" fill-opacity=".9">${letter}</text></svg>`); }
 function withAsset(img, path, fallback){ img.src = fallback; const probe = new Image(); probe.onload = () => img.src = path; probe.src = path; }
 withAsset($('#avA'), 'assets/mempelai-pria.jpg', portrait('R','#B9B78A','#66653A'));
 withAsset($('#avB'), 'assets/mempelai-wanita.jpg', portrait('H','#F1DCD5','#C9A79A'));
-withAsset($('#duoImg'), 'assets/foto-berdua.jpg', svgURI(`<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="#F1DDD5"/><stop offset=".55" stop-color="#D6B8AA"/><stop offset="1" stop-color="#7D7C46"/></linearGradient><filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter></defs><rect width="400" height="500" fill="url(#g)"/><g filter="url(#b)"><circle cx="280" cy="150" r="110" fill="#FFF4E6" opacity=".85"/><ellipse cx="150" cy="470" rx="250" ry="90" fill="#66653A" opacity=".55"/></g><text x="200" y="290" text-anchor="middle" font-family="Didot, 'Bodoni 72', Georgia, serif" font-style="italic" font-size="96" fill="#FFF7EA">R &amp; H</text></svg>`));
+withAsset($('#duoImg'), 'assets/foto-berdua.jpg', svgURI(`<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="#F1DDD5"/><stop offset=".55" stop-color="#D6B8AA"/><stop offset="1" stop-color="#7D7C46"/></linearGradient><filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter></defs><rect width="400" height="500" fill="url(#g)"/><g filter="url(#b)"><circle cx="280" cy="150" r="110" fill="#FFF4E6" opacity=".85"/><ellipse cx="150" cy="470" rx="250" ry="90" fill="#66653A" opacity=".55"/></g><text x="200" y="290" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="96" fill="#FFF7EA">R &amp; H</text></svg>`));
 // prewedding photos, in story order; galeri-1 is the landscape opener and the first four also hang on the pond easels
 const GALLERY = Array.from({ length: 14 }, (_, i) => `assets/galeri-${i + 1}.jpg`);
 const gal = $('#gallery');
