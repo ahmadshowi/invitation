@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#FFF7EA">
-<title>Cwk &amp; Hasna</title>
+<title>Rayana &amp; Hasna</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..500&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Jost:wght@300;400;500;600&display=swap">
 <style>
 /* Editorial wedding stationery: olive, cream and blush on paper. A cinematic walk through the 3D garden, then chapters reveal over it on scroll. */
 :root{
@@ -38,8 +38,7 @@ button,input,textarea{font:inherit;color:inherit}
 ::selection{background:var(--blush);color:var(--ink)}
 :focus-visible{outline:1px solid var(--olive-d);outline-offset:4px}
 .kicker,.eyebrow{font-size:11px;line-height:1.4;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);font-weight:500}
-.branch{display:block;width:clamp(170px,22vw,240px);height:auto;aspect-ratio:480/64;color:var(--olive)}
-.quote .branch{color:var(--olive-d)} footer .branch{color:var(--blush)}
+.branch{display:block;width:clamp(260px,26vw,320px);aspect-ratio:960/200;background:url(assets/untaian-bunga.webp) no-repeat center/contain}
 .grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.07;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:0 30px;border-radius:999px;border:1px solid var(--olive-d);background:var(--olive-d);color:var(--cream);font:500 11px/1 var(--f-body);letter-spacing:.26em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:background .5s var(--ease),color .5s var(--ease),border-color .5s var(--ease)}
@@ -89,11 +88,10 @@ button,input,textarea{font:inherit;color:inherit}
 .tour-bar i{display:block;height:100%;width:0;background:var(--blush)}
 .tour-load{position:absolute;inset:0;z-index:2;display:grid;place-content:center;justify-items:center;gap:20px;background:var(--night);color:var(--cream);transition:opacity 1.4s var(--ease),visibility 1.4s}
 .tour-load.done{opacity:0;visibility:hidden}
-.tour-load .mark{font-size:46px;color:var(--cream)}
-.tour-load .mark i{color:var(--blush)}
-.tour-load .branch{color:var(--blush)}
-.tour-load p{font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:rgba(255,237,210,.6)}
-.tour-load .line{width:150px;height:1px;background:rgba(255,237,210,.16);position:relative;overflow:hidden}
+.tour-load .mark{font-size:58px;font-weight:600;color:var(--cream)}
+.tour-load .mark i{color:var(--blush);font-weight:500}
+.tour-load p{font-size:12.5px;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,237,210,.9)}
+.tour-load .line{width:150px;height:2px;background:rgba(255,237,210,.16);position:relative;overflow:hidden}
 .tour-load .line::after{content:"";position:absolute;inset:0;background:var(--blush);transform-origin:left;animation:load 1.8s var(--ease) infinite}
 @keyframes load{0%{transform:scaleX(0);opacity:1}60%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
 .fade{position:fixed;inset:0;background:var(--night);opacity:0;pointer-events:none;z-index:45;transition:opacity .8s var(--ease)}
@@ -128,7 +126,6 @@ button,input,textarea{font:inherit;color:inherit}
 .chapters h2 em,.chapters .names em{color:var(--blush)}
 .chapters .kicker{color:#FFEDD2;font-weight:500}
 .chapters .kicker,.chapters .date,.chapters .to small,.chapters .facts dt,.chapters .pair span,.chapters .lead{text-shadow:0 1px 2px rgba(20,19,10,.55),0 0 18px rgba(20,19,10,.45)}
-.chapters .branch{color:var(--blush)}
 .chapters .btn{background:var(--cream);border-color:var(--cream);color:var(--olive-dd)}
 .chapters .btn:hover{background:#fff;border-color:#fff}
 .ch .kicker{display:flex;align-items:center}
@@ -206,6 +203,24 @@ button,input,textarea{font:inherit;color:inherit}
 .person h3 small{font-size:.5em;color:var(--muted);letter-spacing:.04em}
 .person p{color:var(--muted);font-size:14.5px;line-height:1.7}
 .couple .and{font:italic 400 clamp(64px,8vw,116px)/1 var(--f-display);color:var(--olive)}
+/* painted floral corners around the couple's photos: a full spray on the arch shoulder, a smaller one at the opposite foot */
+#mempelai,#potret{overflow:hidden}
+.framed{position:relative;isolation:isolate}
+.framed::before,.framed::after{content:"";position:absolute;z-index:1;pointer-events:none;aspect-ratio:9/8;background:url(assets/bingkai-bunga.webp) no-repeat 0 0/100% 100%;filter:drop-shadow(0 10px 12px rgba(40,38,20,.2));transition:opacity 1.4s var(--ease) .35s,scale 1.8s var(--ease) .35s}
+.framed::before{width:92%;left:-13%;top:-9%}
+.framed::after{width:64%;right:-14%;bottom:-6%;transform:rotate(180deg)}
+.framed.flip::before{left:auto;right:-13%;transform:scaleX(-1)}
+.framed.flip::after,.framed.left::after{right:auto;left:-14%;transform:scaleY(-1)}
+.pf-photo .framed::before{width:66%;left:-10%;top:-6%}
+.pf-photo .framed::after{width:50%;left:-10%;bottom:-5%}
+@media (max-width:760px){
+  .person .framed::after{width:54%;right:-11%;bottom:-4%}
+  .person .framed.flip::after{right:auto;left:-11%}
+  .pf-photo .framed::before{width:58%;left:-5%;top:-5%}
+  .pf-photo .framed::after{width:42%;left:-5%;bottom:-3%}
+}
+.reveal:not(.shown) .framed::before,.reveal:not(.shown) .framed::after{opacity:0}
+.reveal:not(.shown) .framed::before,.reveal:not(.shown) .framed::after{scale:.92}
 @media (max-width:760px){.couple{grid-template-columns:1fr}.couple .and{line-height:.6;text-align:center}}
 
 .events{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line-2);border-bottom:1px solid var(--line-2)}
@@ -213,7 +228,7 @@ button,input,textarea{font:inherit;color:inherit}
 .event + .event{border-left:1px solid var(--line-2);padding-left:clamp(20px,4vw,56px)}
 .event h3{font-size:clamp(44px,5.6vw,76px);font-variant-numeric:lining-nums}
 .event h3 span{color:var(--olive);font-style:italic}
-.event p:last-child{color:var(--muted)}
+.event p:not(.kicker){color:var(--muted)}
 @media (max-width:700px){.events{grid-template-columns:1fr}.event + .event{border-left:0;border-top:1px solid var(--line-2);padding-left:0}}
 .count{display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
 .count div{padding:6px 0}
@@ -229,11 +244,14 @@ button,input,textarea{font:inherit;color:inherit}
 .cal .d{aspect-ratio:1;display:grid;place-items:center;border-radius:50%;font-family:var(--f-display);font-size:16px}
 .cal .d.sun{color:var(--rose)}
 .cal .d.day{background:var(--blush);box-shadow:0 0 0 6px rgba(233,207,200,.45);font-style:italic}
-.map{aspect-ratio:16/10;max-width:100%;overflow:hidden;border:1px solid var(--line);background:var(--paper)}
-.map img{width:100%;height:100%;object-fit:cover;display:block}
+.cal-head h3 em{color:var(--olive)}
+.venue{display:grid;grid-template-columns:auto 1fr;gap:6px 20px;align-items:center;padding-top:24px;border-top:1px solid var(--line)}
+.venue .when{grid-row:span 2;align-self:start;font:italic 400 30px/1 var(--f-display);color:var(--rose);min-width:1.4em}
+.venue .btn{justify-self:start}
 .addr{display:grid;gap:6px}
-.addr strong{font:400 26px/1.2 var(--f-display)}
-.addr span{color:var(--muted);font-size:14.5px}
+.addr strong{font:400 clamp(24px,2.6vw,30px)/1.2 var(--f-display)}
+.map-link{justify-self:start;font-size:10.5px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--olive-dd);text-decoration:none;border-bottom:1px solid var(--line-2);padding-bottom:4px;transition:color .4s,border-color .4s}
+.map-link:hover{color:var(--rose);border-color:var(--rose)}
 @media (max-width:860px){.event-grid{grid-template-columns:1fr}}
 
 .pf{grid-template-columns:minmax(0,.95fr) minmax(0,1fr);align-items:center;gap:clamp(48px,8vw,120px)}
@@ -245,7 +263,7 @@ button,input,textarea{font:inherit;color:inherit}
 .pf-text{display:grid;gap:26px;justify-items:start}
 .pf-text h2{font-size:clamp(44px,5.6vw,76px)}
 .pf-text p:not(.kicker){color:var(--muted);max-width:44ch}
-.pf-text .branch{width:200px}
+.pf-text .branch{width:240px;margin-left:-14px}
 .sig{font:400 30px var(--f-display)!important;color:var(--ink)!important}
 .sig i{color:var(--olive)}
 @media (max-width:860px){.pf{grid-template-columns:1fr}.pf-photo figcaption{right:12px}}
@@ -264,15 +282,6 @@ button,input,textarea{font:inherit;color:inherit}
 .lightbox img{width:100%;display:block;max-height:76vh;object-fit:contain}
 .lightbox figcaption{color:var(--cream);display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;flex-wrap:wrap}
 .lightbox .btn{background:transparent;border-color:rgba(255,237,210,.35);color:var(--cream)}
-
-.tl{display:grid;grid-template-columns:140px 1px 1fr;gap:clamp(20px,4vw,48px);padding-bottom:44px}
-.tl .yr{font:italic 400 clamp(32px,3.6vw,44px)/1 var(--f-display);color:var(--olive);text-align:right;font-variant-numeric:lining-nums}
-.tl .dot{background:var(--line-2);position:relative}
-.tl .dot i{position:absolute;left:-4px;top:12px;width:9px;height:9px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 1px var(--olive-d)}
-.tl:last-child .dot i{background:var(--blush-d);box-shadow:none}
-.tl h3{font-size:28px;margin-bottom:8px}
-.tl p{color:var(--muted);max-width:52ch}
-@media (max-width:600px){.tl{grid-template-columns:1px 1fr;gap:20px}.tl .yr{grid-column:2;text-align:left;font-size:30px}.tl .dot{grid-row:1 / span 2;grid-column:1}.tl > div:last-child{grid-column:2}}
 
 .gift{background:var(--olive-d);color:var(--cream)}
 .gift .kicker{color:rgba(255,237,210,.65)}
@@ -364,30 +373,14 @@ if (!location.hash) scrollTo(0, 0);
 addEventListener('pageshow', () => { if (document.body.classList.contains('touring')) scrollTo(0, 0); });
 </script>
 <div class="grain" aria-hidden="true"></div>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <g id="ol"><path d="M0 0C7-4.6 19-5.2 29 0C19 5.2 7 4.6 0 0Z"/><path d="M3 0H25"/></g>
-    <g id="branchHalf" fill="none" stroke="currentColor" stroke-width=".9" stroke-linecap="round">
-      <path d="M232 30C176 31 120 34 18 44"/>
-      <use href="#ol" transform="translate(206 31) rotate(-150)"/><use href="#ol" transform="translate(190 31.5) rotate(152)"/>
-      <use href="#ol" transform="translate(166 32.5) rotate(-146)"/><use href="#ol" transform="translate(148 33.5) rotate(150)"/>
-      <use href="#ol" transform="translate(124 35) rotate(-148)"/><use href="#ol" transform="translate(104 36.5) rotate(154)"/>
-      <use href="#ol" transform="translate(80 38.5) rotate(-150)"/><use href="#ol" transform="translate(60 40) rotate(156)"/>
-      <use href="#ol" transform="translate(38 42) rotate(-156) scale(.86)"/><use href="#ol" transform="translate(20 44) rotate(176) scale(.8)"/>
-      <ellipse cx="136" cy="42" rx="3.6" ry="4.6" transform="rotate(-20 136 42)"/><ellipse cx="92" cy="46" rx="3.2" ry="4.2" transform="rotate(-24 92 46)"/>
-    </g>
-  </defs>
-  <symbol id="branch" viewBox="0 0 480 64"><use href="#branchHalf"/><use href="#branchHalf" transform="translate(480 0) scale(-1 1)"/><circle cx="240" cy="30" r="2.2" fill="currentColor"/></symbol>
-</svg>
 
 <header class="nav">
-  <a class="mark" href="#top">C<i>&amp;</i>H</a>
+  <a class="mark" href="#top">R<i>&amp;</i>H</a>
   <ul>
     <li><a href="#mempelai">Mempelai</a></li>
     <li><a href="#acara">Acara</a></li>
     <li><a href="#potret">Potret</a></li>
     <li><a href="#galeri">Galeri</a></li>
-    <li><a href="#kisah">Kisah</a></li>
     <li><a href="#hadiah">Hadiah</a></li>
   </ul>
   <a class="btn ghost small" href="#rsvp">RSVP</a>
@@ -402,7 +395,7 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
     <div class="tour-bar"><i id="tourProg"></i></div>
     <div class="tour-cap hide" id="tourCap" aria-live="polite"><span id="tourNo">I</span><strong id="tourTitle">Gerbang bunga</strong></div>
   </div>
-  <div class="tour-load" id="tourLoad"><span class="mark">C<i>&amp;</i>H</span><svg class="branch" aria-hidden="true"><use href="#branch"/></svg><p>Cwk &amp; Hasna</p><i class="line"></i></div>
+  <div class="tour-load" id="tourLoad"><span class="mark">R<i>&amp;</i>H</span><i class="branch" aria-hidden="true"></i><p>Rayana &amp; Hasna</p><i class="line"></i></div>
 </div>
 <div class="fade" id="fade"></div>
 
@@ -414,9 +407,9 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
   <div class="chapters">
     <article class="ch hero" data-label="Undangan">
       <div class="card">
-        <svg class="branch" aria-hidden="true"><use href="#branch"/></svg>
+        <i class="branch" aria-hidden="true"></i>
         <p class="kicker">Undangan Pernikahan</p>
-        <h1 class="names"><span>Cwk</span><em>&amp;</em><span>Hasna</span></h1>
+        <h1 class="names"><span>Rayana</span><em>&amp;</em><span>Hasna</span></h1>
         <p class="date"><span>Sabtu</span><i></i><span>26 . 12 . 2026</span><i></i><span>Cianjur</span></p>
         <p class="to"><small>Kepada Yth.</small><b id="guestName">Bapak/Ibu/Saudara/i</b></p>
         <button class="btn" id="openBtn" type="button">Buka Undangan</button>
@@ -428,8 +421,8 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
         <h2>Dengan memohon <em>rahmat Allah</em></h2>
         <p class="lead">Kami bermaksud menyelenggarakan pernikahan putra-putri kami:</p>
         <div class="pair">
-          <div><strong>Cwk</strong><span>Putra pertama Bapak H. Bambang Sutrisno &amp; Ibu Hj. Sri Wahyuni</span></div>
-          <div><strong>Hasna</strong><span>Putri kedua Bapak Ir. Hendra Gunawan &amp; Ibu Ratna Dewi</span></div>
+          <div><strong>Rayana Fitriawan</strong><span>Putra dari Bapak Sumarno &amp; Ibu Suharti</span></div>
+          <div><strong>Hasna Mariah</strong><span>Putri dari Bapak H. A Abdulrahman &amp; Ibu Enung</span></div>
         </div>
       </div>
     </article>
@@ -437,7 +430,7 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
       <div class="card">
         <p class="kicker"><span class="rn">II</span>Galeri</p>
         <h2>Potret kami di <em>tepi kolam</em></h2>
-        <p class="lead">Foto prewedding dipajang di atas easel kayu, di sepanjang jalan setapak menuju kolam.</p>
+        <p class="lead">ini belum ada deskripsi</p>
       </div>
     </article>
     <article class="ch" data-label="Potret">
@@ -449,24 +442,23 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
     </article>
     <article class="ch" data-label="Akad">
       <div class="card">
-        <p class="kicker"><span class="rn">IV</span>Altar taman</p>
+        <p class="kicker"><span class="rn"></span></p>
         <h2>Akad <em>Nikah</em></h2>
         <dl class="facts">
           <div><dt>Hari</dt><dd>Sabtu, 26 Desember 2026</dd></div>
-          <div><dt>Pukul</dt><dd>08.00 – 10.00 WIB</dd></div>
-          <div><dt>Tempat</dt><dd>Taman Kenanga Garden Venue, Cianjur</dd></div>
-          <div><dt>Busana</dt><dd>Olive, cream, atau dusty pink</dd></div>
+          <div><dt>Pukul</dt><dd>09.00 – 11.00 WIB</dd></div>
+          <div><dt>Tempat</dt><dd>Masjid Agung Cianjur</dd></div>
         </dl>
       </div>
     </article>
     <article class="ch" data-label="Resepsi">
       <div class="card">
-        <p class="kicker"><span class="rn">V</span>Meja taman</p>
+        <p class="kicker"><span class="rn"></span></p>
         <h2>Resepsi</h2>
         <dl class="facts">
-          <div><dt>Pukul</dt><dd>11.00 – 14.00 WIB</dd></div>
-          <div><dt>Hidangan</dt><dd>Prasmanan dan gubukan</dd></div>
-          <div><dt>Hiburan</dt><dd>Musik akustik live</dd></div>
+          <div><dt>Hari</dt><dd>Sabtu, 26 Desember 2026</dd></div>
+          <div><dt>Pukul</dt><dd>11.00 – 15.00 WIB</dd></div>
+          <div><dt>Tempat</dt><dd>Bumi Kintamani</dd></div>
         </dl>
       </div>
     </article>
@@ -482,7 +474,7 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
 
 <section class="quote">
   <div class="wrap reveal">
-    <svg class="branch" aria-hidden="true"><use href="#branch"/></svg>
+    <i class="branch" aria-hidden="true"></i>
     <p class="kicker">QS. Ar-Rum : 21</p>
     <blockquote>“Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang.”</blockquote>
   </div>
@@ -493,24 +485,24 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
     <div class="sec-head center reveal">
       <p class="kicker">Mempelai</p>
       <h2>Dua keluarga, <em>satu doa</em></h2>
-      <svg class="branch" aria-hidden="true"><use href="#branch"/></svg>
+      <i class="branch" aria-hidden="true"></i>
     </div>
     <div class="couple">
       <figure class="person reveal">
-        <div class="portrait"><img id="avA" alt="Cwk"></div>
+        <div class="framed"><div class="portrait"><img id="avA" alt="Rayana Fitriawan"></div></div>
         <figcaption>
           <span class="kicker">Mempelai pria</span>
-          <h3>Cwk</h3>
-          <p>Putra pertama dari<br>Bapak H. Bambang Sutrisno &amp; Ibu Hj. Sri Wahyuni</p>
+          <h3>Rayana Fitriawan</h3>
+          <p>Putra dari<br>Bapak Sumarno &amp; Ibu Suharti</p>
         </figcaption>
       </figure>
       <div class="and" aria-hidden="true">&amp;</div>
       <figure class="person reveal">
-        <div class="portrait"><img id="avB" alt="Hasna"></div>
+        <div class="framed flip"><div class="portrait"><img id="avB" alt="Hasna Mariah"></div></div>
         <figcaption>
           <span class="kicker">Mempelai wanita</span>
-          <h3>Hasna</h3>
-          <p>Putri kedua dari<br>Bapak Ir. Hendra Gunawan &amp; Ibu Ratna Dewi</p>
+          <h3>Hasna Mariah</h3>
+          <p>Putri dari<br>Bapak H. A Abdulrahman &amp; Ibu Enung</p>
         </figcaption>
       </figure>
     </div>
@@ -524,8 +516,8 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
       <h2>Sabtu, <em>26 Desember 2026</em></h2>
     </div>
     <div class="events reveal">
-      <article class="event"><p class="kicker">Akad nikah</p><h3>08.00 <span>–</span> 10.00</h3><p>Altar taman · Taman Kenanga Garden Venue</p></article>
-      <article class="event"><p class="kicker">Resepsi</p><h3>11.00 <span>–</span> 14.00</h3><p>Meja taman &amp; lantai dansa</p></article>
+      <article class="event"><p class="kicker">Akad nikah</p><h3>09.00 <span>–</span> 11.00</h3><p>Masjid Agung Cianjur</p><a class="map-link" href="https://maps.app.goo.gl/99y4gYZrby5boaMx8" target="_blank" rel="noopener">Buka peta</a></article>
+      <article class="event"><p class="kicker">Resepsi</p><h3>11.00 <span>–</span> 15.00</h3><p>Bumi Kintamani</p><a class="map-link" href="https://maps.app.goo.gl/T4rBD6u6yunFdBku6" target="_blank" rel="noopener">Buka peta</a></article>
     </div>
     <div class="count reveal" aria-label="Hitung mundur menuju hari pernikahan">
       <div><b id="cD">0</b><span>Hari</span></div>
@@ -540,14 +532,16 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
         <a class="btn ghost" id="gcal" target="_blank" rel="noopener">Simpan ke kalender</a>
       </div>
       <div class="panel reveal">
-        <div class="map"><img id="mapImg" alt="Peta Taman Kenanga"></div>
-        <div class="addr">
-          <strong id="venueName">Taman Kenanga Garden Venue</strong>
-          <span id="venueAddr">Jl. Contoh Raya No. 12, Cianjur, Jawa Barat</span>
+        <div class="cal-head"><h3>Lokasi <em>acara</em></h3><span class="kicker">Cianjur</span></div>
+        <div class="venue">
+          <span class="when">I</span>
+          <div class="addr"><span class="kicker">Akad nikah · 09.00 WIB</span><strong>Masjid Agung Cianjur</strong></div>
+          <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/99y4gYZrby5boaMx8">Buka peta</a>
         </div>
-        <div class="row">
-          <a class="btn" id="mapsLink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=Taman+Kenanga+Cianjur">Buka peta</a>
-          <button class="btn ghost" type="button" id="copyAddr">Salin alamat</button>
+        <div class="venue">
+          <span class="when">II</span>
+          <div class="addr"><span class="kicker">Resepsi · 11.00 WIB</span><strong>Bumi Kintamani</strong></div>
+          <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/T4rBD6u6yunFdBku6">Buka peta</a>
         </div>
       </div>
     </div>
@@ -557,15 +551,15 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
 <section class="sec" id="potret">
   <div class="wrap pf">
     <figure class="pf-photo reveal">
-      <div class="pf-frame"><img id="duoImg" alt="Cwk dan Hasna" data-parallax></div>
+      <div class="framed left"><div class="pf-frame"><img id="duoImg" alt="Rayana dan Hasna" data-parallax></div></div>
       <figcaption>26 . 12 . 2026</figcaption>
     </figure>
     <div class="pf-text reveal">
       <p class="kicker">Potret kami</p>
       <h2>Dua hati, <em>satu langkah</em></h2>
       <p>Terima kasih telah menjadi bagian dari perjalanan kami. Dengan segala kerendahan hati, kami menantikan kehadiran Bapak/Ibu/Saudara/i di hari bahagia ini.</p>
-      <svg class="branch" aria-hidden="true"><use href="#branch"/></svg>
-      <p class="sig">Cwk <i>&amp;</i> Hasna</p>
+      <i class="branch" aria-hidden="true"></i>
+      <p class="sig">Rayana <i>&amp;</i> Hasna</p>
     </div>
   </div>
 </section>
@@ -580,21 +574,6 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
   </div>
 </section>
 
-<section class="sec" id="kisah">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="kicker">Kisah kami</p>
-      <h2>Perjalanan <em>menuju hari ini</em></h2>
-    </div>
-    <div>
-      <div class="tl reveal"><div class="yr">2019</div><div class="dot"><i></i></div><div><h3>Pertama bertemu</h3><p>Kami berkenalan di perpustakaan kampus pada semester akhir kuliah.</p></div></div>
-      <div class="tl reveal"><div class="yr">2021</div><div class="dot"><i></i></div><div><h3>Menjalin hubungan</h3><p>Setelah dua tahun berteman, kami memutuskan untuk saling mengenal dengan lebih serius.</p></div></div>
-      <div class="tl reveal"><div class="yr">2025</div><div class="dot"><i></i></div><div><h3>Lamaran</h3><p>Keluarga Cwk datang melamar pada bulan Juni, disaksikan kedua keluarga besar.</p></div></div>
-      <div class="tl reveal"><div class="yr">2026</div><div class="dot"><i></i></div><div><h3>Menikah</h3><p>Sabtu, 26 Desember 2026. Mohon doa restu untuk langkah kami selanjutnya.</p></div></div>
-    </div>
-  </div>
-</section>
-
 <section class="sec gift" id="hadiah">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -605,21 +584,21 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
     <div class="gifts">
       <div class="gcard reveal">
         <span class="kicker">Bank BCA</span>
-        <span class="num">0000 1234 56</span>
-        <span>a.n. Cwk</span>
-        <div><button class="btn small" type="button" data-copy="0000123456">Salin nomor</button></div>
+        <span class="num">1832 1048 38</span>
+        <span>a.n. Hasna Mariah</span>
+        <div><button class="btn small" type="button" data-copy="1832104838">Salin nomor</button></div>
       </div>
       <div class="gcard reveal">
-        <span class="kicker">Bank Mandiri</span>
-        <span class="num">0000 6543 21</span>
-        <span>a.n. Hasna</span>
-        <div><button class="btn small" type="button" data-copy="0000654321">Salin nomor</button></div>
+        <span class="kicker">Bank Syariah Indonesia</span>
+        <span class="num">7347 9767 11</span>
+        <span>a.n. Rayana Fitriawan</span>
+        <div><button class="btn small" type="button" data-copy="7347976711">Salin nomor</button></div>
       </div>
       <div class="gcard reveal">
         <span class="kicker">Kirim kado</span>
-        <strong>Kediaman mempelai wanita</strong>
-        <p>Jl. Contoh Melati No. 7, Cianjur 43211. Penerima: Hasna, 0812 0000 0000.</p>
-        <div><button class="btn small" type="button" data-copy="Jl. Contoh Melati No. 7, Cianjur 43211 (Hasna, 0812 0000 0000)">Salin alamat</button></div>
+        <strong>Hasna / Rayana (no. 2)</strong>
+        <p>Jl. H. Soleh RT 07 RW 02 No. 78A, Kel. Sukamaju Baru, Kec. Tapos. Belakang Apartemen GLV.</p>
+        <div><button class="btn small" type="button" data-copy="Hasna/Rayana (no. 2), Jl. H. Soleh RT 07 RW 02 No. 78A, Kel. Sukamaju Baru, Kec. Tapos (belakang Apartemen GLV)">Salin alamat</button></div>
       </div>
     </div>
   </div>
@@ -634,13 +613,13 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
     </div>
     <div class="rsvp reveal">
       <aside>
-        <div><p class="eyebrow">Buku tamu</p><h3>Cwk &amp; Hasna</h3></div>
+        <div><p class="eyebrow">Buku tamu</p><h3>Rayana &amp; Hasna</h3></div>
         <ol class="steps" id="steps">
           <li class="on"><i>i</i>Nama tamu</li>
           <li><i>ii</i>Kehadiran</li>
           <li><i>iii</i>Ucapan &amp; doa</li>
         </ol>
-        <p style="font-size:12px;letter-spacing:.06em;color:rgba(255,237,210,.6)">Sabtu, 26 Desember 2026<br>Taman Kenanga, Cianjur</p>
+        <p style="font-size:12px;letter-spacing:.06em;color:rgba(255,237,210,.6)">Sabtu, 26 Desember 2026<br>Masjid Agung Cianjur · Bumi Kintamani</p>
       </aside>
       <form id="rsvpForm" novalidate>
         <div data-step="1" class="field">
@@ -668,7 +647,7 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
         </div>
         <div data-step="3" class="field" hidden>
           <label for="fMsg">Ucapan &amp; doa</label>
-          <textarea id="fMsg" maxlength="500" placeholder="Tulis ucapan untuk Cwk & Hasna"></textarea>
+          <textarea id="fMsg" maxlength="500" placeholder="Tulis ucapan untuk Rayana & Hasna"></textarea>
         </div>
         <div data-step="4" class="done-msg" hidden>
           <p class="eyebrow">Terkirim</p>
@@ -696,13 +675,13 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
 </section>
 
 <footer>
-  <svg class="branch" aria-hidden="true"><use href="#branch"/></svg>
+  <i class="branch" aria-hidden="true"></i>
   <p class="kicker">Sampai jumpa di taman</p>
-  <div class="names"><span>Cwk</span><em>&amp;</em><span>Hasna</span></div>
+  <div class="names"><span>Rayana</span><em>&amp;</em><span>Hasna</span></div>
   <p>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
 </footer>
 
-<button class="music" id="music" type="button" aria-label="Putar musik" aria-pressed="false"><span class="bars"><i></i><i></i><i></i><i></i></span></button>
+<button class="music" id="music" type="button" aria-label="Putar musik" title="Sampai Jadi Debu · Banda Neira" aria-pressed="false"><span class="bars"><i></i><i></i><i></i><i></i></span></button>
 <div class="toast" id="toast" hidden></div>
 
 <script src="config.js"></script>
@@ -1143,7 +1122,7 @@ function drawSign() {
   c.fillStyle = '#F7EBD6'; c.fillRect(0, 0, w, h); c.strokeStyle = '#8F8E52'; c.lineWidth = 2; c.strokeRect(30, 30, w - 60, h - 60); c.strokeRect(40, 40, w - 80, h - 80);
   c.textAlign = 'center'; c.fillStyle = '#6E6C51'; c.font = '500 22px Jost, sans-serif'; c.fillText('S E L A M A T   D A T A N G', w / 2, 200);
   c.font = 'italic 400 34px "Bodoni Moda", Didot, serif'; c.fillText('di pernikahan', w / 2, 262);
-  c.fillStyle = '#4B4A2A'; c.font = '400 108px "Bodoni Moda", Didot, serif'; c.fillText('Cwk', w / 2, 420); c.fillText('Hasna', w / 2, 600);
+  c.fillStyle = '#4B4A2A'; c.font = '400 108px "Bodoni Moda", Didot, serif'; c.fillText('Rayana', w / 2, 420); c.fillText('Hasna', w / 2, 600);
   c.fillStyle = '#8F8E52'; c.font = 'italic 400 68px "Bodoni Moda", Didot, serif'; c.fillText('&', w / 2, 504);
   c.fillStyle = '#6E6C51'; c.font = '500 22px Jost, sans-serif'; c.fillText('2 6  ·  X I I  ·  2 0 2 6', w / 2, 700); signTex.needsUpdate = true;
 }
@@ -1171,7 +1150,7 @@ at(20.4, 0, -2.75, Math.PI / 2 - .5, () => {
 
 /* ---------- guest book desk ---------- */
 const bookSignTex = canvasTex(320, 420, () => {});
-function drawBookSign() { const c = bookSignTex.userData.ctx; c.fillStyle = '#F7EBD6'; c.fillRect(0, 0, 320, 420); c.strokeStyle = '#8F8E52'; c.lineWidth = 2; c.strokeRect(18, 18, 284, 384); c.textAlign = 'center'; c.fillStyle = '#6E6C51'; c.font = '500 16px Jost, sans-serif'; c.fillText('B U K U   T A M U', 160, 150); c.fillStyle = '#4B4A2A'; c.font = '400 64px "Bodoni Moda", Didot, serif'; c.fillText('C', 112, 250); c.fillText('H', 208, 250); c.fillStyle = '#8F8E52'; c.font = 'italic 400 48px "Bodoni Moda", Didot, serif'; c.fillText('&', 160, 246); bookSignTex.needsUpdate = true; }
+function drawBookSign() { const c = bookSignTex.userData.ctx; c.fillStyle = '#F7EBD6'; c.fillRect(0, 0, 320, 420); c.strokeStyle = '#8F8E52'; c.lineWidth = 2; c.strokeRect(18, 18, 284, 384); c.textAlign = 'center'; c.fillStyle = '#6E6C51'; c.font = '500 16px Jost, sans-serif'; c.fillText('B U K U   T A M U', 160, 150); c.fillStyle = '#4B4A2A'; c.font = '400 64px "Bodoni Moda", Didot, serif'; c.fillText('R', 112, 250); c.fillText('H', 208, 250); c.fillStyle = '#8F8E52'; c.font = 'italic 400 48px "Bodoni Moda", Didot, serif'; c.fillText('&', 160, 246); bookSignTex.needsUpdate = true; }
 drawBookSign();
 at(DESK.x, 0, DESK.z, Math.PI, () => {
   put(M.wood, BOX, 0, .78, 0, 0, 0, 0, 1.9, .06, .8);
@@ -1241,7 +1220,7 @@ function drawDuo() {
   c.fillStyle = g; c.fillRect(0, 0, w, h);
   c.filter = 'blur(60px)'; c.fillStyle = 'rgba(255,244,230,.85)'; c.beginPath(); c.arc(410, 240, 170, 0, 7); c.fill();
   c.fillStyle = 'rgba(102,101,58,.55)'; c.beginPath(); c.ellipse(220, 760, 380, 150, 0, 0, 7); c.fill(); c.filter = 'none';
-  c.textAlign = 'center'; c.fillStyle = '#FFF7EA'; c.font = 'italic 400 148px "Bodoni Moda", Didot, serif'; c.fillText('C & H', w / 2, 470);
+  c.textAlign = 'center'; c.fillStyle = '#FFF7EA'; c.font = 'italic 400 148px "Bodoni Moda", Didot, serif'; c.fillText('R & H', w / 2, 470);
   c.font = '500 19px Jost, sans-serif'; c.fillStyle = 'rgba(255,247,234,.85)'; c.fillText('F O T O   B E R D U A', w / 2, 540);
   duoPH.needsUpdate = true;
 }
@@ -1284,7 +1263,7 @@ TL.load('assets/foto-berdua.jpg', tex => {
 
 /* ---------- photo booth ---------- */
 const neonTex = canvasTex(1024, 220, () => {});
-function drawNeon() { const c = neonTex.userData.ctx; c.clearRect(0, 0, 1024, 220); c.font = 'italic 400 104px "Bodoni Moda", Didot, serif'; c.textAlign = 'center'; c.fillStyle = '#FFF1DE'; c.shadowColor = '#F2C9B8'; c.shadowBlur = 26; c.fillText('Cwk & Hasna', 512, 145); neonTex.needsUpdate = true; }
+function drawNeon() { const c = neonTex.userData.ctx; c.clearRect(0, 0, 1024, 220); c.font = 'italic 400 104px "Bodoni Moda", Didot, serif'; c.textAlign = 'center'; c.fillStyle = '#FFF1DE'; c.shadowColor = '#F2C9B8'; c.shadowBlur = 26; c.fillText('Rayana & Hasna', 512, 145); neonTex.needsUpdate = true; }
 drawNeon();
 at(BOOTH.x, 0, BOOTH.z, Math.PI / 4, () => {
   hedge(0, 0, 4.4, .45, 3.0);
@@ -1596,7 +1575,7 @@ Promise.all([flyReady, assetsReady]).then(() => {
 </script>
 <script>
 (() => {
-const CFG = Object.assign({ supabaseUrl: '', supabaseAnonKey: '', eventISO: '2026-12-26T08:00:00+07:00' }, window.WEDDING_CONFIG || {});
+const CFG = Object.assign({ supabaseUrl: '', supabaseAnonKey: '', eventISO: '2026-12-26T09:00:00+07:00' }, window.WEDDING_CONFIG || {});
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = s => document.querySelector(s);
 const toastEl = $('#toast'); let toastT;
@@ -1606,10 +1585,9 @@ function toast(m){ toastEl.textContent = m; toastEl.hidden = false; clearTimeout
 function svgURI(s){ return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s); }
 function portrait(letter, a, b){ return svgURI(`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .25 0 0 0 0 .22 0 0 0 0 .12 0 0 0 .09 0"/></filter></defs><rect width="300" height="400" fill="url(#g)"/><rect width="300" height="400" filter="url(#n)"/><text x="150" y="262" text-anchor="middle" font-family="Didot, 'Bodoni 72', 'Bodoni Moda', Georgia, serif" font-style="italic" font-size="168" fill="#FFF7EA" fill-opacity=".9">${letter}</text></svg>`); }
 function withAsset(img, path, fallback){ img.src = fallback; const probe = new Image(); probe.onload = () => img.src = path; probe.src = path; }
-withAsset($('#avA'), 'assets/mempelai-pria.jpg', portrait('C','#B9B78A','#66653A'));
+withAsset($('#avA'), 'assets/mempelai-pria.jpg', portrait('R','#B9B78A','#66653A'));
 withAsset($('#avB'), 'assets/mempelai-wanita.jpg', portrait('H','#F1DCD5','#C9A79A'));
-withAsset($('#duoImg'), 'assets/foto-berdua.jpg', svgURI(`<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="#F1DDD5"/><stop offset=".55" stop-color="#D6B8AA"/><stop offset="1" stop-color="#7D7C46"/></linearGradient><filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter></defs><rect width="400" height="500" fill="url(#g)"/><g filter="url(#b)"><circle cx="280" cy="150" r="110" fill="#FFF4E6" opacity=".85"/><ellipse cx="150" cy="470" rx="250" ry="90" fill="#66653A" opacity=".55"/></g><text x="200" y="290" text-anchor="middle" font-family="Didot, 'Bodoni 72', Georgia, serif" font-style="italic" font-size="96" fill="#FFF7EA">C &amp; H</text></svg>`));
-$('#mapImg').src = svgURI(`<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#FFF7EA"/><g stroke="#E2D6BF" stroke-width="1" fill="none"><path d="M0 40H400M0 92H400M0 150H400M0 208H400M60 0V250M132 0V250M214 0V250M300 0V250M360 0V250"/></g><g fill="#EFE6D0"><rect x="216" y="94" width="82" height="54"/><rect x="62" y="152" width="68" height="54"/></g><rect x="218" y="96" width="78" height="50" fill="#DCDDB8"/><path d="M-10 196C80 176 150 120 236 112S350 70 410 52" stroke="#D4C7AA" stroke-width="7" fill="none"/><path d="M-10 196C80 176 150 120 236 112S350 70 410 52" stroke="#FFF7EA" stroke-width="2" fill="none" stroke-dasharray="8 8"/><g transform="translate(257 121)"><circle r="17" fill="#E9CFC8" fill-opacity=".55"/><circle r="6.5" fill="#66653A"/></g><text x="257" y="166" text-anchor="middle" font-family="Didot, 'Bodoni 72', Georgia, serif" font-style="italic" font-size="15" fill="#4B4A2A">Taman Kenanga</text></svg>`);
+withAsset($('#duoImg'), 'assets/foto-berdua.jpg', svgURI(`<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="#F1DDD5"/><stop offset=".55" stop-color="#D6B8AA"/><stop offset="1" stop-color="#7D7C46"/></linearGradient><filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter></defs><rect width="400" height="500" fill="url(#g)"/><g filter="url(#b)"><circle cx="280" cy="150" r="110" fill="#FFF4E6" opacity=".85"/><ellipse cx="150" cy="470" rx="250" ry="90" fill="#66653A" opacity=".55"/></g><text x="200" y="290" text-anchor="middle" font-family="Didot, 'Bodoni 72', Georgia, serif" font-style="italic" font-size="96" fill="#FFF7EA">R &amp; H</text></svg>`));
 const scenes = [['Lembang, pagi berkabut',['#EFE3CC','#B9B78A','#7D7C46','#FFF4E2']],['Kebun teh',['#E6E2C6','#9A9A6A','#5E5D33','#F7EBD6']],['Pantai selatan',['#F3E6D6','#D4B3A8','#8F8E52','#FFF1E6']],['Kafe kecil, Braga',['#F1DDD5','#C9A79A','#6E5A44','#FFF3EA']],['Senja di bukit',['#F6E0CF','#DDB7A4','#7D6A4C','#FFF0DC']],['Hari lamaran',['#F7EBD6','#E9CFC8','#8F8E52','#FFFFFF']]];
 const sceneURI = ([,[a,b,c,h]],i) => svgURI(`<svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset=".62" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></linearGradient><filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="46"/></filter><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .2 0 0 0 0 .18 0 0 0 0 .1 0 0 0 .12 0"/></filter></defs><rect width="600" height="420" fill="url(#s)"/><g filter="url(#b)"><circle cx="${420-i*40}" cy="${110+i*8}" r="90" fill="${h}" opacity=".9"/><ellipse cx="${170+i*30}" cy="330" rx="240" ry="70" fill="${c}" opacity=".55"/><circle cx="${90+i*50}" cy="150" r="60" fill="${b}" opacity=".7"/></g><rect width="600" height="420" filter="url(#n)"/></svg>`);
 const gal = $('#gallery');
@@ -1630,7 +1608,7 @@ const EVENT = new Date(CFG.eventISO);
 { const y=2026,m=11,first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
   let h=['Min','Sen','Sel','Rab','Kam','Jum','Sab'].map(d=>`<div class="dow">${d}</div>`).join(''); for(let i=0;i<first;i++) h+='<div></div>';
   for(let d=1;d<=days;d++){ const w=(first+d-1)%7; h+=`<div class="d${w===0?' sun':''}${d===26?' day':''}">${d}</div>`; } $('#cal').innerHTML=h;
-  const q=new URLSearchParams({action:'TEMPLATE',text:'Pernikahan Cwk & Hasna',dates:'20261226T010000Z/20261226T070000Z',details:'Akad 08.00 WIB, resepsi 11.00 WIB.',location:'Taman Kenanga Garden Venue, Cianjur'});
+  const q=new URLSearchParams({action:'TEMPLATE',text:'Pernikahan Rayana & Hasna',dates:'20261226T020000Z/20261226T080000Z',details:'Akad nikah 09.00–11.00 WIB, Masjid Agung Cianjur: https://maps.app.goo.gl/99y4gYZrby5boaMx8\nResepsi 11.00–15.00 WIB, Bumi Kintamani: https://maps.app.goo.gl/T4rBD6u6yunFdBku6',location:'Masjid Agung Cianjur'});
   $('#gcal').href='https://calendar.google.com/calendar/render?'+q; }
 const pad=n=>String(n).padStart(2,'0');
 function tick(){ let s=Math.max(0,Math.floor((EVENT-Date.now())/1000)); $('#cD').textContent=Math.floor(s/86400); s%=86400; $('#cH').textContent=pad(Math.floor(s/3600)); s%=3600; $('#cM').textContent=pad(Math.floor(s/60)); $('#cS').textContent=pad(s%60); }
@@ -1639,7 +1617,6 @@ tick(); setInterval(tick,1000);
 /* --- copy --- */
 function copy(text){ const fb=()=>{ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); toast('Tersalin');}catch(_){toast(text);} ta.remove(); }; try{ navigator.clipboard.writeText(text).then(()=>toast('Tersalin'),fb); }catch(_){ fb(); } }
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-copy]'); if(b) copy(b.dataset.copy); });
-$('#copyAddr').onclick=()=>copy($('#venueName').textContent+', '+$('#venueAddr').textContent);
 
 /* --- music: plays assets/musik.mp3 when present, fading in softly --- */
 let musicOn=false, audioEl=null, fadeT=null;

@@ -1,4 +1,4 @@
-# Undangan Pernikahan Cwk & Hasna
+# Undangan Pernikahan Rayana & Hasna
 
 Website undangan dengan taman 3D realistis (Three.js): tamu diajak berjalan menyusuri taman bersama sebuah karakter, lalu kartu undangan muncul satu per satu saat halaman digulir. RSVP & ucapan tersimpan di **Supabase**, dan link personal untuk tiap tamu.
 
@@ -23,7 +23,7 @@ supabase/
    window.WEDDING_CONFIG = {
      supabaseUrl: 'https://xxxx.supabase.co',
      supabaseAnonKey: 'eyJhbGciOi...',
-     eventISO: '2026-12-26T08:00:00+07:00'
+     eventISO: '2026-12-26T09:00:00+07:00'
    };
    ```
    Anon key memang aman ditaruh di website publik. Isi database dijaga oleh aturan RLS di `schema.sql`: tamu hanya bisa menambah ucapan dan membacanya, tidak bisa mengubah atau menghapus, dan tidak bisa melihat daftar tamu lain.
@@ -60,7 +60,7 @@ Taruh file dengan nama berikut di `web/assets/`. Halaman memakainya otomatis; se
 | `pasangan.png` | Foto full-body berdua dengan **latar transparan** (PNG). Berdiri di pelaminan taman 3D. Tanpa file ini pelaminan tampil kosong |
 | `musik.mp3` | Musik latar. Tombol musik hanya muncul kalau file ini ada |
 
-Teks (nama mempelai & orang tua, alamat, rekening, kisah, tanggal) bisa diedit langsung di `index.html`. Nama di papan gerbang, buku tamu, dan neon photo booth juga ada di sana: cari "Cwk" lalu ganti semuanya. Placeholder lain: "Jl. Contoh", "0000 1234 56".
+Teks (nama mempelai & orang tua, alamat, rekening, tanggal) bisa diedit langsung di `index.html`. Nama di papan gerbang, buku tamu, dan neon photo booth juga ada di sana: cari "Rayana" lalu ganti semuanya.
 
 ## 5. Melihat RSVP
 Supabase → **Table Editor → rsvp**. Bisa diekspor ke CSV. Rekap cepat lewat SQL Editor:

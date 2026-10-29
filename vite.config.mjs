@@ -16,7 +16,7 @@ function copyRuntimeFiles(env) {
       cpSync(resolve(root, 'assets'), resolve(outDir, 'assets'), { recursive: true, filter: src => !src.endsWith('.gitkeep') });
       // Supabase settings: env vars (e.g. set in Vercel) win over the values in web/config.js
       if (env.VITE_SUPABASE_URL && env.VITE_SUPABASE_ANON_KEY) {
-        const cfg = { supabaseUrl: env.VITE_SUPABASE_URL, supabaseAnonKey: env.VITE_SUPABASE_ANON_KEY, eventISO: env.VITE_EVENT_ISO || '2026-12-26T08:00:00+07:00' };
+        const cfg = { supabaseUrl: env.VITE_SUPABASE_URL, supabaseAnonKey: env.VITE_SUPABASE_ANON_KEY, eventISO: env.VITE_EVENT_ISO || '2026-12-26T09:00:00+07:00' };
         writeFileSync(resolve(outDir, 'config.js'), `window.WEDDING_CONFIG = ${JSON.stringify(cfg, null, 2)};\n`);
       } else if (existsSync(resolve(root, 'config.js'))) {
         cpSync(resolve(root, 'config.js'), resolve(outDir, 'config.js'));
