@@ -8,7 +8,7 @@ web/
   config.js         ← isi URL & key Supabase di sini
   tamu.html         ← pembuat link tamu + pesan WhatsApp (untuk mempelai)
   assets/           ← taruh foto & musik di sini (opsional)
-  assets/3d/        ← kupu-kupu (butterfly.glb) & tekstur taman, jangan dihapus
+  assets/3d/        ← model 3D (kupu-kupu, sofa, lentera, vas, pot), langit & tekstur taman, jangan dihapus
 supabase/
   schema.sql        ← tabel, keamanan, dan contoh tamu
 ```
@@ -23,7 +23,7 @@ supabase/
    window.WEDDING_CONFIG = {
      supabaseUrl: 'https://xxxx.supabase.co',
      supabaseAnonKey: 'eyJhbGciOi...',
-     eventISO: '2026-12-12T08:00:00+07:00'
+     eventISO: '2026-12-26T08:00:00+07:00'
    };
    ```
    Anon key memang aman ditaruh di website publik. Isi database dijaga oleh aturan RLS di `schema.sql`: tamu hanya bisa menambah ucapan dan membacanya, tidak bisa mengubah atau menghapus, dan tidak bisa melihat daftar tamu lain.
@@ -74,4 +74,7 @@ Untuk menghapus ucapan yang tidak pantas, hapus barisnya di Table Editor.
 - Langit: "Kloofendal 48d Partly Cloudy (Pure Sky)" dari Poly Haven (CC0), diputar agar matahari menyamping.
 - Tekstur marmer/travertine, kulit kayu platanus, dan plester dari Poly Haven (CC0).
 - Daun pohon & pagar: foto daun ambientCG LeafSet024 dan LeafSet014 (CC0), dirangkai menjadi tekstur gerombol.
+- Rumput: foto helai rumput ambientCG Foliage001 dan Foliage007 (CC0), dirangkai menjadi rumpun.
+- Sofa pelaminan (Sofa_01), lentera kuningan (Lantern_01), vas keramik (ceramic_vase_01), pot terakota (planter_pot_clay): model scan Poly Haven (CC0).
+- Kayu oak (kursi, easel, panggung), kain linen (taplak), dan batu kolam: tekstur Poly Haven oak_veneer_01, rough_linen, rock_boulder_dry (CC0).
 - Tekstur rumput, kayu, air dari contoh three.js (MIT).
