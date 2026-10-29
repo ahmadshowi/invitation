@@ -1,5 +1,5 @@
 -- =========================================================
---  Undangan Raditya & Anindya — skema database Supabase
+--  Undangan Cwk & Hasna — skema database Supabase
 --  Jalankan sekali di: Supabase Dashboard → SQL Editor → New query → Run
 -- =========================================================
 

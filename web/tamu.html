@@ -3,35 +3,53 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Daftar Tamu · Raditya & Anindya</title>
+<title>Daftar Tamu · Cwk & Hasna</title>
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..500;1,6..96,400&family=Jost:wght@400;500&display=swap">
 <style>
-:root{--bg:#F3EFE6;--card:#FCFAF5;--ink:#1F2A22;--muted:#5D6A5F;--line:#DDD8CB;--leaf:#3F6B49;--rose:#D27D72}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Plus Jakarta Sans",system-ui,sans-serif;padding:32px 16px}
-main{max-width:900px;margin:0 auto;display:grid;gap:20px}h1{font:400 40px/1.1 Gloock,Georgia,serif;margin:0}
-.card{background:var(--card);border-radius:20px;padding:22px;display:grid;gap:12px}label{font-weight:600;font-size:13px}
-input,textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff}textarea{min-height:140px}
-.muted{color:var(--muted);font-size:13px}button{font:inherit;font-weight:600;border:0;border-radius:999px;padding:9px 16px;background:var(--ink);color:#fff;cursor:pointer}
-button.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
-table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.wrap{overflow-x:auto}code,pre{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}pre{background:#1F2A22;color:#E8EEE3;padding:14px;border-radius:12px;white-space:pre-wrap;margin:0}
-.link{word-break:break-all;color:var(--leaf)}.row{display:flex;gap:8px;flex-wrap:wrap}
+:root{--paper:#FFF7EA;--cream:#FFEDD2;--olive:#8F8E52;--olive-d:#66653A;--olive-dd:#4B4A2A;--ink:#33321F;--muted:#6E6C51;--line:rgba(75,74,42,.18);--blush:#E9CFC8;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 Jost,"Helvetica Neue",system-ui,sans-serif;padding:clamp(40px,7vw,88px) max(16px,env(safe-area-inset-left,0px));-webkit-font-smoothing:antialiased}
+main{max-width:940px;margin:0 auto;display:grid;gap:22px}
+.kicker{font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+h1{font:400 clamp(38px,5vw,58px)/1.05 "Bodoni Moda",Didot,Georgia,serif;letter-spacing:-.01em;margin:0}
+h1 em{color:var(--olive)}
+.card{background:#fff;border:1px solid var(--line);padding:clamp(20px,3vw,32px);display:grid;gap:14px}
+label,strong{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:500}
+input,textarea{width:100%;font:inherit;border:1px solid var(--line);padding:12px 14px;background:var(--paper);color:var(--ink)}
+input:focus,textarea:focus{outline:0;border-color:var(--olive-d)}
+textarea{min-height:140px;resize:vertical}
+.muted{color:var(--muted);font-size:13px}
+button{font:500 10.5px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase;border:1px solid var(--olive-d);border-radius:999px;padding:11px 18px;background:var(--olive-d);color:var(--cream);cursor:pointer}
+button:hover{background:var(--olive-dd)}
+button.ghost{background:transparent;color:var(--olive-dd);border-color:rgba(75,74,42,.32)}
+button.ghost:hover{background:var(--olive-d);color:var(--cream)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:12px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.26em;font-weight:500}
+td:first-child{font:400 18px "Bodoni Moda",Didot,serif}
+.wrap{overflow-x:auto}
+code,pre{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+pre{background:var(--olive-dd);color:var(--cream);padding:16px;white-space:pre-wrap;margin:0}
+.link{word-break:break-all;color:var(--olive-d)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
 </style>
 </head>
 <body>
 <main>
-  <div><p class="muted">Untuk mempelai · jangan dibagikan</p><h1>Daftar tamu &amp; link undangan</h1></div>
+  <div><p class="kicker">Untuk mempelai · jangan dibagikan</p><h1>Daftar tamu &amp; <em>link undangan</em></h1></div>
   <div class="card">
     <label for="base">Alamat website undangan</label>
-    <input id="base" placeholder="https://raditya-anindya.vercel.app">
+    <input id="base" placeholder="https://cwk-hasna.vercel.app">
     <label for="names">Nama tamu (satu per baris)</label>
     <textarea id="names">Nova
 B&amp;B
 OISHI</textarea>
     <label for="tpl">Pesan WhatsApp</label>
     <textarea id="tpl" style="min-height:110px">Assalamualaikum {nama},
-Dengan penuh sukacita kami mengundang Anda ke pernikahan kami, Raditya & Anindya, Sabtu 12 Desember 2026 di Taman Kenanga, Bandung.
+Dengan penuh sukacita kami mengundang Anda ke pernikahan kami, Cwk & Hasna, Sabtu 12 Desember 2026 di Taman Kenanga, Bandung.
 Undangan lengkap: {link}</textarea>
   </div>
   <div class="card">

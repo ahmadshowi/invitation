@@ -1,4 +1,4 @@
-# Undangan Pernikahan Raditya & Anindya
+# Undangan Pernikahan Cwk & Hasna
 
 Website undangan dengan taman 3D realistis (Three.js): tamu diajak berjalan menyusuri taman bersama sebuah karakter, lalu kartu undangan muncul satu per satu saat halaman digulir. RSVP & ucapan tersimpan di **Supabase**, dan link personal untuk tiap tamu.
 
@@ -7,8 +7,8 @@ web/
   index.html        ← halaman undangan
   config.js         ← isi URL & key Supabase di sini
   tamu.html         ← pembuat link tamu + pesan WhatsApp (untuk mempelai)
-  assets/           ← taruh foto, video, musik di sini (opsional)
-  assets/3d/        ← model karakter (Xbot.glb), kupu-kupu (butterfly.glb) & tekstur taman, jangan dihapus
+  assets/           ← taruh foto & musik di sini (opsional)
+  assets/3d/        ← kupu-kupu (butterfly.glb) & tekstur taman, jangan dihapus
 supabase/
   schema.sql        ← tabel, keamanan, dan contoh tamu
 ```
@@ -49,17 +49,18 @@ Format link: `https://domainmu/?to=nova`. Nama tamu muncul di sampul ("Kepada Yt
 - Halaman itu juga membuat **SQL** untuk menambah tamu ke Supabase, supaya ejaan nama seperti `B&B` atau `OISHI` tampil persis.
 - Kalau slug tidak ada di database, nama diambil dari link itu sendiri (`?to=budi-santoso` menjadi "Budi Santoso").
 
-## 4. Ganti foto, video & musik (opsional)
+## 4. Ganti foto & musik (opsional)
 Taruh file dengan nama berikut di `web/assets/`. Halaman memakainya otomatis; selama filenya belum ada, yang tampil ilustrasi:
 
 | File | Dipakai untuk |
 |---|---|
 | `mempelai-pria.jpg`, `mempelai-wanita.jpg` | Foto profil mempelai (rasio 4:5) |
 | `galeri-1.jpg` … `galeri-6.jpg` | Galeri prewedding (foto 1–4 juga tampil di easel taman 3D) |
-| `prewed.mp4` | Videotron (format MP4 H.264, sebaiknya < 20 MB) |
-| `musik.mp3` | Musik latar (menggantikan musik bawaan) |
+| `foto-berdua.jpg` | Potret berdua, **posisi portrait** (rasio 3:4 atau 4:5). Tampil di dinding potret taman 3D dan di bagian "Potret" |
+| `pasangan.png` | Foto full-body berdua dengan **latar transparan** (PNG). Berdiri di pelaminan taman 3D. Tanpa file ini pelaminan tampil kosong |
+| `musik.mp3` | Musik latar. Tombol musik hanya muncul kalau file ini ada |
 
-Teks (nama mempelai & orang tua, alamat, rekening, kisah, tanggal) bisa diedit langsung di `index.html`. Nama di papan gerbang, layar videotron, dan neon photo booth juga ada di sana: cari "Raditya" lalu ganti semuanya. Placeholder lain: "Jl. Contoh", "0000 1234 56".
+Teks (nama mempelai & orang tua, alamat, rekening, kisah, tanggal) bisa diedit langsung di `index.html`. Nama di papan gerbang, buku tamu, dan neon photo booth juga ada di sana: cari "Cwk" lalu ganti semuanya. Placeholder lain: "Jl. Contoh", "0000 1234 56".
 
 ## 5. Melihat RSVP
 Supabase → **Table Editor → rsvp**. Bisa diekspor ke CSV. Rekap cepat lewat SQL Editor:
@@ -70,4 +71,7 @@ Untuk menghapus ucapan yang tidak pantas, hapus barisnya di Table Editor.
 
 ## Kredit aset 3D
 - Kupu-kupu: "Butterfly" oleh assetfactory, https://sketchfab.com/3d-models/butterfly-87ef5cea7e2f4557a28503f5b96646cd (lisensi Sketchfab Standard).
-- Karakter: Xbot dan tekstur rumput, kayu, air dari contoh three.js (MIT).
+- Langit: "Kloofendal 48d Partly Cloudy (Pure Sky)" dari Poly Haven (CC0), diputar agar matahari menyamping.
+- Tekstur marmer/travertine, kulit kayu platanus, dan plester dari Poly Haven (CC0).
+- Daun pohon & pagar: foto daun ambientCG LeafSet024 dan LeafSet014 (CC0), dirangkai menjadi tekstur gerombol.
+- Tekstur rumput, kayu, air dari contoh three.js (MIT).
