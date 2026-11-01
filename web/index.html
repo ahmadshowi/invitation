@@ -8,7 +8,7 @@
 <title>Rayana &amp; Hasna</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..700&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..700&family=Jost:wght@300;400;500;600;700&display=swap">
 <style>
 /* Editorial wedding stationery: olive, cream and blush on paper. A cinematic walk through the 3D garden, then chapters reveal over it on scroll. */
 :root{
@@ -138,6 +138,7 @@ button,input,textarea{font:inherit;color:inherit}
 .rn{font:italic 500 16px var(--f-display);letter-spacing:0;text-transform:none;color:var(--blush);margin-right:16px}
 .ch h2{font-size:clamp(40px,4.6vw,62px)}
 .ch .lead{color:rgba(255,247,234,.86);font-size:15.5px;max-width:36ch;text-shadow:0 1px 14px rgba(20,19,10,.4)}
+.ch .lead.deadline{font-weight:700;color:#FFF7EA}
 .facts{margin:0;display:grid;border-top:1px solid rgba(255,237,210,.4)}
 .facts div{display:grid;grid-template-columns:92px 1fr;gap:18px;padding:15px 0;border-bottom:1px solid rgba(255,237,210,.18);align-items:baseline}
 .facts dt{font-size:10.5px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,237,210,.82)}
@@ -186,6 +187,7 @@ button,input,textarea{font:inherit;color:inherit}
 .sec-head.center{text-align:center;justify-items:center;margin:0 auto}
 .sec-head h2{font-size:clamp(42px,5.8vw,78px)}
 .sec-head p{color:var(--muted);max-width:50ch}
+.sec-head p.deadline{font-weight:700;color:var(--ink)}
 .alt{background:var(--cream)}
 .reveal{opacity:0;transform:translateY(34px);transition:opacity 1.3s var(--ease),transform 1.5s var(--ease)}
 .reveal.shown{opacity:1;transform:none}
@@ -356,6 +358,8 @@ footer .kicker{color:rgba(255,237,210,.55)}
 footer .names{font-size:clamp(52px,8vw,104px);color:var(--cream)}
 footer .names em{color:var(--blush)}
 footer p{color:rgba(255,237,210,.7);max-width:46ch}
+.credit{margin-top:clamp(28px,5vw,48px);display:grid;gap:12px;justify-items:center;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:rgba(255,237,210,.45)}
+.credit img{width:132px;height:auto;opacity:.78}
 
 .music{position:fixed;right:calc(env(safe-area-inset-right,0px) + 18px);bottom:calc(env(safe-area-inset-bottom,0px) + 18px);z-index:30;width:46px;height:46px;border-radius:50%;border:1px solid var(--line-2);background:rgba(255,247,234,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--olive-dd);cursor:pointer;display:grid;place-items:center}
 .touring .music{bottom:calc(env(safe-area-inset-bottom,0px) + clamp(64px,11vh,104px) + 14px)}
@@ -457,10 +461,10 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
         </dl>
       </div>
     </article>
-    <article class="ch" data-label="Resepsi">
+    <article class="ch" data-label="After Akad">
       <div class="card">
         <p class="kicker"><span class="rn"></span></p>
-        <h2>Resepsi</h2>
+        <h2>After <em>Akad</em></h2>
         <dl class="facts">
           <div><dt>Hari</dt><dd>Sabtu, 26 Desember 2026</dd></div>
           <div><dt>Pukul</dt><dd>11.00 – 15.00 WIB</dd></div>
@@ -473,7 +477,7 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
       <div class="card">
         <p class="kicker"><span class="rn">VI</span>Buku tamu</p>
         <h2>Doa &amp; <em>konfirmasi hadir</em></h2>
-        <p class="lead">Mohon konfirmasi sebelum 19 Desember 2026 agar kami dapat menyiapkan tempat untuk Anda.</p>
+        <p class="lead deadline">Mohon konfirmasi sebelum 19 Desember 2026 agar kami dapat menyiapkan tempat untuk Anda.</p>
       </div>
     </article>
   </div>
@@ -524,10 +528,10 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
     </div>
     <div class="events reveal">
       <article class="event"><p class="kicker">Akad nikah</p><h3>09.00 <span>–</span> 11.00</h3><p>Masjid Agung Cianjur</p><a class="map-link" href="https://maps.app.goo.gl/99y4gYZrby5boaMx8" target="_blank" rel="noopener">Buka peta</a></article>
-      <article class="event"><p class="kicker">Resepsi</p><h3>11.00 <span>–</span> 15.00</h3><p>Bumi Kintamani</p><a class="map-link" href="https://maps.app.goo.gl/T4rBD6u6yunFdBku6" target="_blank" rel="noopener">Buka peta</a></article>
+      <article class="event"><p class="kicker">After akad</p><h3>11.00 <span>–</span> 15.00</h3><p>Bumi Kintamani</p><a class="map-link" href="https://maps.app.goo.gl/T4rBD6u6yunFdBku6" target="_blank" rel="noopener">Buka peta</a></article>
     </div>
     <div class="dress reveal">
-      <p class="kicker">Dresscode akad &amp; resepsi</p>
+      <p class="kicker">Dresscode akad &amp; after akad</p>
       <ul><li><i style="background:#F3E7D3"></i>Cream</li><li><i style="background:#FBF6EC"></i>Ivory</li><li><i style="background:#DCC7A6"></i>Beige</li></ul>
     </div>
     <div class="count reveal" aria-label="Hitung mundur menuju hari pernikahan">
@@ -551,7 +555,7 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
         </div>
         <div class="venue">
           <span class="when">II</span>
-          <div class="addr"><span class="kicker">Resepsi · 11.00 WIB</span><strong>Bumi Kintamani</strong></div>
+          <div class="addr"><span class="kicker">After akad · 11.00 WIB</span><strong>Bumi Kintamani</strong></div>
           <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/T4rBD6u6yunFdBku6">Buka peta</a>
         </div>
       </div>
@@ -620,15 +624,15 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
     <div class="sec-head reveal">
       <p class="kicker">Konfirmasi &amp; ucapan</p>
       <h2>Buku tamu <em>digital</em></h2>
-      <p>Mohon konfirmasi sebelum 19 Desember 2026 agar kami dapat menyiapkan tempat duduk.</p>
+      <p class="deadline">Mohon konfirmasi sebelum 19 Desember 2026 agar kami dapat menyiapkan tempat duduk.</p>
     </div>
     <div class="rsvp reveal">
       <aside>
         <div><p class="eyebrow">Buku tamu</p><h3>Rayana &amp; Hasna</h3></div>
         <ol class="steps" id="steps">
-          <li class="on"><i>i</i>Nama tamu</li>
-          <li><i>ii</i>Kehadiran</li>
-          <li><i>iii</i>Ucapan &amp; doa</li>
+          <li class="on"><i></i>Nama tamu</li>
+          <li><i></i>Kehadiran</li>
+          <li><i></i>Ucapan &amp; doa</li>
         </ol>
         <p style="font-size:12px;letter-spacing:.06em;color:rgba(255,237,210,.6)">Sabtu, 26 Desember 2026<br>Masjid Agung Cianjur · Bumi Kintamani</p>
       </aside>
@@ -690,6 +694,7 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
   <p class="kicker">Sampai jumpa di taman</p>
   <div class="names"><span>Rayana</span><em>&amp;</em><span>Hasna</span></div>
   <p>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
+  <div class="credit"><span>Undangan digital oleh</span><img src="assets/logo-yourcreative.png" alt="END. Your Creative" width="352" height="143" loading="lazy" decoding="async"></div>
 </footer>
 
 <button class="music" id="music" type="button" aria-label="Putar musik" title="Sampai Jadi Debu · Banda Neira" aria-pressed="false"><span class="bars"><i></i><i></i><i></i><i></i></span></button>
@@ -1600,7 +1605,7 @@ withAsset($('#avA'), 'assets/mempelai-pria.jpg', portrait('R','#B9B78A','#66653A
 withAsset($('#avB'), 'assets/mempelai-wanita.jpg', portrait('H','#F1DCD5','#C9A79A'));
 withAsset($('#duoImg'), 'assets/foto-berdua.jpg', svgURI(`<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="#F1DDD5"/><stop offset=".55" stop-color="#D6B8AA"/><stop offset="1" stop-color="#7D7C46"/></linearGradient><filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter></defs><rect width="400" height="500" fill="url(#g)"/><g filter="url(#b)"><circle cx="280" cy="150" r="110" fill="#FFF4E6" opacity=".85"/><ellipse cx="150" cy="470" rx="250" ry="90" fill="#66653A" opacity=".55"/></g><text x="200" y="290" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="96" fill="#FFF7EA">R &amp; H</text></svg>`));
 // prewedding photos, in story order; galeri-1 is the landscape opener and the first four also hang on the pond easels
-const GALLERY = Array.from({ length: 14 }, (_, i) => `assets/galeri-${i + 1}.jpg`);
+const GALLERY = Array.from({ length: 15 }, (_, i) => `assets/galeri-${i + 1}.jpg`);
 const gal = $('#gallery');
 gal.innerHTML = GALLERY.map((src,i)=>`<button type="button" data-i="${i}" aria-label="Perbesar foto ${i+1}"><img alt="" src="${src}" width="${i?866:1300}" height="${i?1300:866}" loading="lazy" decoding="async"></button>`).join('');
 let lb=null, lbI=0;
@@ -1617,7 +1622,7 @@ const EVENT = new Date(CFG.eventISO);
 { const y=2026,m=11,first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
   let h=['Min','Sen','Sel','Rab','Kam','Jum','Sab'].map(d=>`<div class="dow">${d}</div>`).join(''); for(let i=0;i<first;i++) h+='<div></div>';
   for(let d=1;d<=days;d++){ const w=(first+d-1)%7; h+=`<div class="d${w===0?' sun':''}${d===26?' day':''}">${d}</div>`; } $('#cal').innerHTML=h;
-  const q=new URLSearchParams({action:'TEMPLATE',text:'Pernikahan Rayana & Hasna',dates:'20261226T020000Z/20261226T080000Z',details:'Akad nikah 09.00–11.00 WIB, Masjid Agung Cianjur: https://maps.app.goo.gl/99y4gYZrby5boaMx8\nResepsi 11.00–15.00 WIB, Bumi Kintamani: https://maps.app.goo.gl/T4rBD6u6yunFdBku6',location:'Masjid Agung Cianjur'});
+  const q=new URLSearchParams({action:'TEMPLATE',text:'Pernikahan Rayana & Hasna',dates:'20261226T020000Z/20261226T080000Z',details:'Akad nikah 09.00–11.00 WIB, Masjid Agung Cianjur: https://maps.app.goo.gl/99y4gYZrby5boaMx8\nAfter akad 11.00–15.00 WIB, Bumi Kintamani: https://maps.app.goo.gl/T4rBD6u6yunFdBku6',location:'Masjid Agung Cianjur'});
   $('#gcal').href='https://calendar.google.com/calendar/render?'+q; }
 const pad=n=>String(n).padStart(2,'0');
 function tick(){ let s=Math.max(0,Math.floor((EVENT-Date.now())/1000)); $('#cD').textContent=Math.floor(s/86400); s%=86400; $('#cH').textContent=pad(Math.floor(s/3600)); s%=3600; $('#cM').textContent=pad(Math.floor(s/60)); $('#cS').textContent=pad(s%60); }
@@ -1680,8 +1685,11 @@ let guestSlug=null;
 try{ guestSlug=new URLSearchParams(location.search).get('to'); }catch(_){}
 function setGuest(name){ if(!name) return; $('#guestName').textContent=name; $('#tourGuest').textContent=name; if(!$('#fName').value) $('#fName').value=name; }
 if(guestSlug){
-  guestSlug=guestSlug.trim().toLowerCase().slice(0,60);
-  const pretty=decodeURIComponent(guestSlug).replace(/[-_+]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  // URLSearchParams already decodes; keep the guest's own casing (?to=Pak%20Budi), title-case plain slugs (?to=budi-santoso)
+  const raw=guestSlug.trim().replace(/\s+/g,' ').slice(0,60);
+  guestSlug=raw.toLowerCase();
+  const spaced=raw.replace(/[-_+]/g,' ').replace(/\s+/g,' ').trim();
+  const pretty=spaced===spaced.toLowerCase()?spaced.replace(/(^|\s)\S/g,c=>c.toUpperCase()):spaced;
   if(sb){ sb.rpc('get_guest',{p_slug:guestSlug}).then(({data,error})=>setGuest(!error&&data?data:pretty)); }
   else setGuest(pretty);
 }
