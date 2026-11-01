@@ -55,7 +55,7 @@ Taruh file dengan nama berikut di `web/assets/`. Halaman memakainya otomatis; se
 | File | Dipakai untuk |
 |---|---|
 | `mempelai-pria.jpg`, `mempelai-wanita.jpg` | Foto profil mempelai (rasio 4:5) |
-| `galeri-1.jpg` … `galeri-15.jpg` | Galeri prewedding (foto 1–4 juga tampil di easel taman 3D) |
+| `galeri-1.jpg` … `galeri-16.jpg` | Galeri prewedding (foto 1–4 juga tampil di easel taman 3D) |
 | `foto-berdua.jpg` | Potret berdua, **posisi portrait** (rasio 3:4 atau 4:5). Tampil di dinding potret taman 3D dan di bagian "Potret" |
 | `pasangan.png` | Foto full-body berdua dengan **latar transparan** (PNG). Berdiri di pelaminan taman 3D. Tanpa file ini pelaminan tampil kosong |
 | `musik.mp3` | Musik latar. Tombol musik hanya muncul kalau file ini ada |
