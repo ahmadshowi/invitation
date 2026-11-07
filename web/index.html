@@ -333,6 +333,7 @@ button,input,textarea{font:inherit;color:inherit}
 .stepper output{font:600 34px var(--f-display);min-width:2ch;text-align:center;font-variant-numeric:lining-nums}
 .form-foot{display:flex;justify-content:space-between;gap:10px;padding-top:8px}
 .err{color:var(--rose);font-size:13px;min-height:1.2em}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0}
 .done-msg{display:grid;gap:12px;justify-items:start}
 .done-msg h3{font-size:38px}
 .mode-note{font-size:13px;color:var(--muted)}
@@ -638,6 +639,8 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
         <p style="font-size:12px;letter-spacing:.06em;color:rgba(255,237,210,.6)">Sabtu, 26 Desember 2026<br>Masjid Agung Cianjur · Bumi Kintamani</p>
       </aside>
       <form id="rsvpForm" novalidate>
+        <!-- jebakan bot: tidak terlihat oleh tamu, biasanya diisi oleh bot -->
+        <label class="hp" aria-hidden="true">Website <input id="fWeb" name="website" tabindex="-1" autocomplete="off"></label>
         <div data-step="1" class="field">
           <label for="fName">Nama lengkap</label>
           <input id="fName" maxlength="60" autocomplete="name" placeholder="Nama Anda">
@@ -1716,6 +1719,16 @@ async function save(row){
   if(mode==='artifact'){ try{ await adb.collection('ucapan').add(row); return true; }catch(e){ return false; } }
   return false;
 }
+// pesan dari saringan di database (supabase/schema.sql → rsvp_guard)
+function saveError(ex){
+  const m=String(ex&&ex.message||'');
+  if(m.includes('rsvp:link')) return 'Maaf, ucapan tidak boleh berisi link atau alamat website.';
+  if(m.includes('rsvp:dupe')) return 'Ucapan ini sudah terkirim sebelumnya. Terima kasih!';
+  if(m.includes('rsvp:rate')) return 'Terlalu banyak kiriman dari perangkat ini. Coba lagi beberapa menit lagi.';
+  if(m.includes('rsvp:busy')) return 'Buku tamu sedang ramai. Coba kirim lagi sebentar lagi.';
+  if(ex&&ex.code==='23514') return 'Periksa kembali nama dan ucapan Anda, lalu coba lagi.';
+  return 'Gagal mengirim. Periksa koneksi internet lalu coba lagi.';
+}
 form.addEventListener('submit',async e=>{
   e.preventDefault();
   if(cur===1){ if($('#fName').value.trim().length<2){ err.textContent='Tulis nama Anda, minimal 2 huruf.'; $('#fName').focus(); return; } show(2); return; }
@@ -1723,11 +1736,12 @@ form.addEventListener('submit',async e=>{
   const msg=$('#fMsg').value.trim(); if(msg.length<3){ err.textContent='Tulis ucapan singkat untuk kedua mempelai.'; $('#fMsg').focus(); return; }
   const row={ nama:$('#fName').value.trim().slice(0,60), hadir:hadirVal(), jumlah:hadirVal()==='tidak'?0:jumlah, pesan:msg.slice(0,500), t:Date.now() };
   const nb=$('#next'); nb.disabled=true; let shared=false;
-  try{ shared=await save(row); }catch(ex){ nb.disabled=false; err.textContent='Gagal mengirim. Periksa koneksi internet lalu coba lagi.'; return; }
+  if($('#fWeb').value){ shared=true; } // bot mengisi kolom tersembunyi: pura-pura berhasil, tidak disimpan
+  else try{ shared=await save(row); }catch(ex){ nb.disabled=false; err.textContent=saveError(ex); return; }
   nb.disabled=false; if(!shared){ local.unshift(row); render(); }
   const first=row.nama.split(' ')[0];
   $('#doneTitle').textContent=row.hadir==='hadir'?`Sampai jumpa, ${first}!`:`Terima kasih, ${first}.`;
-  $('#doneText').textContent=shared?'Ucapan Anda sudah masuk ke buku tamu dan tampil di bawah.':'Mode pratinjau: ucapan ini hanya tampil di perangkat Anda.';
+  $('#doneText').textContent=shared?'Ucapan Anda sudah masuk ke buku tamu.':'Mode pratinjau: ucapan ini hanya tampil di perangkat Anda.';
   show(4);
 });
 const label={hadir:'Hadir',ragu:'Masih ragu',tidak:'Tidak hadir'};
@@ -1749,7 +1763,8 @@ async function loadRemote(){
 render();
 if(mode==='supabase'){
   loadRemote();
-  try{ sb.channel('rsvp-live').on('postgres_changes',{event:'INSERT',schema:'public',table:'rsvp'},()=>loadRemote()).subscribe(); }catch(_){}
+  // '*' juga menangkap ucapan yang baru kamu centang "tampil" (mode persetujuan)
+  try{ sb.channel('rsvp-live').on('postgres_changes',{event:'*',schema:'public',table:'rsvp'},()=>loadRemote()).subscribe(); }catch(_){}
 } else if(window.claude && window.claude.use){
   $('#modeNote').textContent='Memuat ucapan…';
   window.claude.use('db').then(d=>{ adb=d; if(!adb){ $('#modeNote').textContent='Mode pratinjau: ucapan hanya tampil di perangkat ini.'; return; } mode='artifact';

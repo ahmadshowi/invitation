@@ -16,7 +16,8 @@ supabase/
 ## 1. Siapkan Supabase (±5 menit)
 1. Buat project gratis di https://supabase.com.
 2. Buka **SQL Editor → New query**, tempel isi `supabase/schema.sql`, lalu klik **Run**.
-   Ini membuat tabel `guests` dan `rsvp`, mengaktifkan keamanan (RLS), menyalakan realtime, dan mengisi tamu contoh: Nova, B&B, OISHI.
+   Ini membuat tabel `guests` dan `rsvp`, mengaktifkan keamanan (RLS), saringan spam, realtime, dan mengisi tamu contoh: Nova, B&B, OISHI.
+   File ini aman dijalankan ulang kalau nanti ada pembaruan; data yang sudah masuk tidak terhapus.
 3. Buka **Project Settings → API**, salin **Project URL** dan **anon public key**.
 4. Tempel keduanya ke `web/config.js`:
    ```js
@@ -37,6 +38,14 @@ npm run dev      # lokal, buka alamat yang muncul
 npm run build    # hasil di dist/
 npm run preview  # cek hasil build
 ```
+
+**ArenHost / hosting cPanel:** situs ini statis, jadi tidak butuh PHP atau MySQL di hosting.
+1. Isi `web/config.js` (langkah 1.4), lalu jalankan `npm run build`.
+2. Buka cPanel → **File Manager** → `public_html` (atau folder domain/subdomain-mu).
+3. Upload **isi** folder `dist/` (bukan folder `dist`-nya), yaitu `index.html`, `tamu.html`, `config.js`, `bundle/`, `assets/`. Cara cepat: kompres isi `dist/` jadi zip, upload, lalu klik **Extract**.
+4. Buka domainmu. Kalau tulisan di bawah buku tamu masih "Mode pratinjau", berarti `config.js` belum terisi.
+
+Setiap kali mengubah sesuatu, ulangi `npm run build` lalu upload ulang file yang berubah.
 
 **Vercel (dari GitHub):** Import repo dengan Root Directory `./` (root repo, bukan `web`). Pengaturan build sudah ditulis di `vercel.json` (Install `npm ci`, Build `npm run build`, Output `dist`), jadi biarkan kolom override kosong.
 
@@ -62,12 +71,31 @@ Taruh file dengan nama berikut di `web/assets/`. Halaman memakainya otomatis; se
 
 Teks (nama mempelai & orang tua, alamat, rekening, tanggal) bisa diedit langsung di `index.html`. Nama di papan gerbang, buku tamu, dan neon photo booth juga ada di sana: cari "Rayana" lalu ganti semuanya.
 
-## 5. Melihat RSVP
-Supabase → **Table Editor → rsvp**. Bisa diekspor ke CSV. Rekap cepat lewat SQL Editor:
+## 5. Melihat RSVP & moderasi ucapan
+Supabase → **Table Editor → rsvp**. Bisa diekspor ke CSV. Rekap cepat lewat SQL Editor (termasuk yang disembunyikan):
 ```sql
 select hadir, count(*) as ucapan, sum(jumlah) as orang from public.rsvp group by hadir;
 ```
-Untuk menghapus ucapan yang tidak pantas, hapus barisnya di Table Editor.
+
+**Menyembunyikan ucapan aneh:** di Table Editor → `rsvp`, hilangkan centang kolom **`tampil`** di baris itu, lalu simpan. Ucapan hilang dari website saat halaman dibuka ulang, tapi datanya tetap ada dan bisa dicentang lagi kapan saja. Hapus barisnya hanya kalau benar-benar tidak perlu.
+
+**Saringan otomatis** (sudah aktif lewat `schema.sql`):
+- ucapan atau nama yang berisi link/alamat website ditolak,
+- ucapan yang sama persis dari nama yang sama tidak bisa dikirim dua kali,
+- maks. 10 kiriman per jaringan per 10 menit, dan 30 kiriman per menit untuk seluruh website,
+- kolom tersembunyi di formulir menjebak bot,
+- jumlah tamu dibatasi maks. 2, dan waktu kirim tidak bisa dipalsukan.
+
+**Mode persetujuan** (opsional): ucapan baru tidak tampil sampai kamu centang `tampil`. Jalankan di SQL Editor:
+```sql
+update public.pengaturan set langsung_tampil = false;  -- kembali: = true
+```
+
+## 6. Supaya Supabase tidak "tertidur"
+Project Supabase gratis dijeda kalau tidak ada aktivitas sekitar 7 hari. Datanya aman, tapi selama dijeda buku tamu tidak bisa dipakai.
+- Sebelum undangan disebar, **buka website undangan tiap 4–5 hari** sampai bagian buku tamu termuat. Itu sudah dihitung sebagai aktivitas. Pasang pengingat di HP.
+- Setelah undangan disebar, kunjungan tamu sudah menjaganya tetap aktif.
+- Kalau sempat dijeda: login ke Supabase, buka project-nya, klik **Restore**, tunggu beberapa menit.
 
 ## Kredit aset 3D
 - Kupu-kupu: "Butterfly" oleh assetfactory, https://sketchfab.com/3d-models/butterfly-87ef5cea7e2f4557a28503f5b96646cd (lisensi Sketchfab Standard).
