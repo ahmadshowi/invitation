@@ -67,7 +67,9 @@ Taruh file dengan nama berikut di `web/assets/`. Halaman memakainya otomatis; se
 | `galeri-1.jpg` … `galeri-16.jpg` | Galeri prewedding (foto 1–4 juga tampil di easel taman 3D) |
 | `foto-berdua.jpg` | Potret berdua, **posisi portrait** (rasio 3:4 atau 4:5). Tampil di dinding potret taman 3D dan di bagian "Potret" |
 | `pasangan.png` | Foto full-body berdua dengan **latar transparan** (PNG). Berdiri di pelaminan taman 3D. Tanpa file ini pelaminan tampil kosong |
-| `musik.mp3` | Musik latar. Tombol musik hanya muncul kalau file ini ada |
+| `musik.m4a` atau `musik.mp3` | Musik latar. Tombol musik hanya muncul kalau salah satu ada (`.m4a` dipakai lebih dulu). Sebaiknya 96–128 kbps: lagu 6 menit jadi ±5 MB, bukan ±10 MB |
+
+Foto sebaiknya dikompres dulu sebelum ditaruh (misalnya lewat squoosh.app, JPEG kualitas ±80, lebar maks. 1300 px). Hasilnya hampir tidak terlihat bedanya, tapi ukurannya bisa separuh, sehingga undangan lebih cepat terbuka di HP.
 
 Teks (nama mempelai & orang tua, alamat, rekening, tanggal) bisa diedit langsung di `index.html`. Nama di papan gerbang, buku tamu, dan neon photo booth juga ada di sana: cari "Rayana" lalu ganti semuanya.
 

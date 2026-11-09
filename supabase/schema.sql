@@ -51,13 +51,6 @@ alter table public.rsvp       enable row level security;
 alter table public.pengaturan enable row level security;  -- tanpa policy = tidak bisa diakses dari website
 alter table public.rsvp_log   enable row level security;  -- tanpa policy = tidak bisa diakses dari website
 
--- Izin akses dari website, ditulis eksplisit supaya tetap benar walaupun
--- "Automatically expose new tables" dimatikan (disarankan) atau dinyalakan.
-grant usage on schema public to anon, authenticated;
-revoke all on public.guests, public.pengaturan, public.rsvp_log from anon, authenticated;
-revoke all on public.rsvp from anon, authenticated;
-grant select, insert on public.rsvp to anon, authenticated;
-
 -- Daftar tamu TIDAK bisa dibaca publik (nama tamu lain tidak bocor).
 -- Halaman hanya bisa menanyakan satu nama lewat fungsi get_guest(slug).
 create or replace function public.get_guest(p_slug text)
