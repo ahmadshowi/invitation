@@ -97,6 +97,16 @@ button,input,textarea{font:inherit;color:inherit}
 .tour-load .line{width:150px;height:2px;background:rgba(255,237,210,.16);position:relative;overflow:hidden}
 .tour-load .line::after{content:"";position:absolute;inset:0;background:var(--blush);transform-origin:left;animation:load 1.8s var(--ease) infinite}
 @keyframes load{0%{transform:scaleX(0);opacity:1}60%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+/* once the garden has loaded the loader becomes the cover: the guest's tap opens it and starts the music
+   (phones never allow sound before a tap) */
+.tour-load .open-to,.tour-load .open{display:none}
+.tour-load.ready .line{display:none}
+.tour-load.ready .open-to{display:block;animation:rise 1s var(--ease) both}
+.tour-load.ready .open{display:inline-flex;pointer-events:auto;margin-top:6px;background:var(--cream);border-color:var(--cream);color:var(--olive-dd);animation:rise 1s var(--ease) .15s both}
+.tour-load.ready .open:hover{background:#fff;border-color:#fff}
+.tour-load .open-to{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,237,210,.6);text-align:center}
+.tour-load .open-to b{display:block;margin-top:8px;font:italic 500 24px var(--f-display);letter-spacing:0;text-transform:none;color:var(--cream)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .fade{position:fixed;inset:0;background:var(--night);opacity:0;pointer-events:none;z-index:45;transition:opacity .8s var(--ease)}
 .fade.on{opacity:1}
 
@@ -110,6 +120,15 @@ button,input,textarea{font:inherit;color:inherit}
 .halo{background:radial-gradient(46% 56% at 50% 50%,rgba(31,30,19,.5) 0%,rgba(31,30,19,.34) 55%,rgba(31,30,19,0) 100%),linear-gradient(rgba(31,30,19,.2),rgba(31,30,19,0) 18%,rgba(31,30,19,0) 82%,rgba(31,30,19,.22));opacity:0;transition:opacity 1.4s var(--ease)}
 .stage[data-mode="chapter"] .veil,.stage[data-mode="hero"] .halo{opacity:1}
 .grade{background:radial-gradient(130% 105% at 50% 42%,rgba(255,237,210,.06) 45%,rgba(60,50,28,.34) 100%);mix-blend-mode:multiply}
+/* Phones: blend modes, backdrop blur and blur transitions laid over the always-moving 3D canvas make the
+   compositor redo full-screen work every frame. Swap them for plain look-alikes. */
+@media (hover:none) and (pointer:coarse),(max-width:760px){
+  .grain{display:none}
+  .grade{mix-blend-mode:normal;background:radial-gradient(130% 105% at 50% 42%,rgba(60,50,28,0) 45%,rgba(60,50,28,.3) 100%)}
+  .nav::before{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,247,234,.95)}
+  .music{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,247,234,.96)}
+  .ch .card > *{filter:none}
+}
 .chapters{position:relative;margin-top:-100vh;margin-top:-100svh;pointer-events:none;overflow-x:clip}
 .ch{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:110px max(20px,env(safe-area-inset-right,0px)) 90px max(20px,env(safe-area-inset-left,0px))}
 .ch .card{position:relative;isolation:isolate;pointer-events:auto;width:100%;max-width:440px;margin-left:max(0px,calc((100vw - 1200px)/2));display:grid;gap:24px}
@@ -411,7 +430,9 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
     <div class="tour-bar"><i id="tourProg"></i></div>
     <div class="tour-cap hide" id="tourCap" aria-live="polite"><span id="tourNo">I</span><strong id="tourTitle">Gerbang bunga</strong></div>
   </div>
-  <div class="tour-load" id="tourLoad"><span class="mark">R<i>&amp;</i>H</span><i class="branch" aria-hidden="true"></i><p>Rayana &amp; Hasna</p><i class="line"></i></div>
+  <div class="tour-load" id="tourLoad"><span class="mark">R<i>&amp;</i>H</span><i class="branch" aria-hidden="true"></i><p>Rayana &amp; Hasna</p><i class="line"></i>
+    <p class="open-to">Kepada Yth.<b id="openGuest">Bapak/Ibu/Saudara/i</b></p>
+    <button class="btn open" id="tourOpen" type="button">Buka Undangan</button></div>
 </div>
 <div class="fade" id="fade"></div>
 
@@ -1425,12 +1446,13 @@ const flyReady = new Promise(res => new GLTFLoader().setMeshoptDecoder(MeshoptDe
   const spawn = (size, m) => {
     const o = cloneRig(src), g = new THREE.Group(), inner = new THREE.Group();
     o.position.copy(center).negate(); inner.add(o); inner.rotation.y = yaw; inner.scale.setScalar(size / span); g.add(inner); scene.add(g);
-    o.traverse(x => { if (x.isMesh) { x.material = m; x.castShadow = true; x.frustumCulled = false; } });
+    o.traverse(x => { if (x.isMesh) { x.material = m; x.castShadow = !lite; x.frustumCulled = false; } }); // their tiny shadows double the draw calls
     const mx = new THREE.AnimationMixer(o), a = mx.clipAction(gltf.animations[0]); a.timeScale = rr(1.3, 1.9); a.play(); mx.setTime(rr(0, 5)); mixers.push(mx);
     return { g, a };
   };
   const gd = spawn(.5, mats[1]); guide = { o: gd.g, flapA: gd.a, fly: true, side: 0 };
-  for (let i = 0; i < 14; i++) {
+  // each butterfly is 7 skinned meshes (no instancing), so phones get fewer of them
+  for (let i = 0; i < (lite ? 6 : 14); i++) {
     const { g } = spawn(rr(.17, .23), mats[i % 3]);
     const home = pick([[0, 0, 6], [6, 0, 2], [-6, 0, -2], [13, 0, 2], [20, 0, -2], [12, 0, -7], [-11, 0, -9], [9, 0, 16], [21.5, 0, 3], [21.5, 0, -12], [-2, 0, 21]]);
     flies.push({ g, hx: home[0], hz: home[2], ph: rr(0, 9), sp: rr(.45, .8) });
@@ -1579,7 +1601,7 @@ const flyAhead = V();
 const clock = new THREE.Clock(); let started = false;
 // frame-rate guard: if the phone stays under ~45 fps for two 1.5 s windows, lower the render resolution a notch.
 // Starts 3 s after loading (shader compiles and texture uploads are slow on purpose) and ignores tab switches.
-let perfFrom = Infinity, pAcc = 0, pN = 0, pSlow = 0;
+let perfFrom = Infinity, pAcc = 0, pN = 0, pSlow = 0, coverWait = false; // coverWait: garden is hidden behind the cover, skip rendering
 function govern(raw) {
   if (clock.elapsedTime < perfFrom || raw > .25 || dpr <= DPR_MIN) return;
   pAcc += raw; pN++; if (pAcc < 1.5) return;
@@ -1590,7 +1612,7 @@ function govern(raw) {
 function loop() {
   requestAnimationFrame(loop);
   const raw = clock.getDelta(), dt = Math.min(raw, .05);
-  if (!visible || document.hidden) return;
+  if (!visible || document.hidden || coverWait) return;
   const t = clock.elapsedTime;
   windU.value = reduce ? 0 : t;
   if (started && tour.on) tourStep(dt); else scrollStep(dt);
@@ -1605,16 +1627,28 @@ function loop() {
   }
   renderer.render(scene, camera);
   govern(raw);
+  if (meter) { meterTick(raw); renderer.info.reset(); }
+}
+// add ?fps to the link to see frame rate, render resolution and draw calls on a phone
+const meter = new URLSearchParams(location.search).has('fps') && Object.assign(document.createElement('div'), { style: 'position:fixed;left:8px;top:8px;z-index:99;padding:6px 9px;border-radius:6px;background:rgba(0,0,0,.72);color:#9f9;font:12px/1.4 ui-monospace,Menlo,monospace;pointer-events:none;white-space:pre' });
+if (meter) { document.body.appendChild(meter); renderer.info.autoReset = false; window.__three = { renderer, scene, sun }; } // count shadow + pond mirror + main pass together
+let mAcc = 0, mN = 0;
+function meterTick(raw) {
+  mAcc += raw; mN++; if (mAcc < .5) return;
+  const r = renderer.info.render;
+  meter.textContent = `${Math.round(mN / mAcc)} fps  ${(mAcc / mN * 1000).toFixed(1)} ms\nres ${dpr}x ${lite ? 'hp' : 'pc'}\n${r.calls} draw  ${(r.triangles / 1000).toFixed(0)}k tri`;
+  mAcc = mN = 0;
 }
 addEventListener('resize', resize);
 resize(); loop();
 
 Promise.all([flyReady, assetsReady]).then(() => {
   if (guide) walkers.push(guide);
-  $('tourLoad').classList.add('done');
   placeWalker(0, .016, ZONES[0].look);
-  perfFrom = clock.elapsedTime + 3;
-  if (tour.on) started = true; else finishTour();
+  const open = () => { coverWait = false; $('tourLoad').classList.add('done'); perfFrom = clock.elapsedTime + 3; if (tour.on) started = true; else finishTour(); };
+  // the tap on "Buka Undangan" is what lets the browser start the music (the page script listens to it too)
+  if (tour.on) { $('tourLoad').classList.add('ready'); requestAnimationFrame(() => requestAnimationFrame(() => { coverWait = !$('tourLoad').classList.contains('done'); })); $('tourOpen').addEventListener('click', open, { once: true }); }
+  else open();
   window.__venueReady = true;
 });
 </script>
@@ -1687,7 +1721,14 @@ function stopMusic(){ clearInterval(fadeT); if(audioEl) audioEl.pause(); musicOn
 // musik.m4a (AAC, about half the size of an MP3 at the same quality) first, then musik.mp3; an HTML reply means "not found" on SPA hosts
 { const has=src=>fetch(src,{method:'HEAD'}).then(r=>r.ok&&!/text\/html/.test(r.headers.get('content-type')||'')&&src,()=>false);
   has('assets/musik.m4a').then(s=>s||has('assets/musik.mp3')).then(src=>{ if(!src) return; audioEl=new Audio(src); audioEl.loop=true; audioEl.preload='metadata'; mBtn.hidden=false; }); }
-mBtn.onclick=()=>musicOn?stopMusic():startMusic();
+let musicTouched=false; // once the guest uses the music button themselves, never start it for them again
+mBtn.onclick=()=>{ musicTouched=true; musicOn?stopMusic():startMusic(); };
+// autoplay: phones only allow sound after a tap, so start on "Buka Undangan", or on the first tap/key anywhere
+// (covers guests who skip the cover, reduced-motion visitors, and phones without 3D)
+{ const evs=['click','touchend','keydown'];
+  const kick=e=>{ if(musicOn||musicTouched){ evs.forEach(n=>removeEventListener(n,kick,true)); return; }
+    if(e.target.closest&&e.target.closest('#music')) return; startMusic(); };
+  evs.forEach(n=>addEventListener(n,kick,true)); }
 
 /* --- smooth scroll: Lenis when available, native otherwise --- */
 let lenis=null;
@@ -1729,7 +1770,7 @@ if(CFG.supabaseUrl && CFG.supabaseAnonKey && window.supabase){ sb=window.supabas
 /* guest from link: ?to=nova */
 let guestSlug=null;
 try{ guestSlug=new URLSearchParams(location.search).get('to'); }catch(_){}
-function setGuest(name){ if(!name) return; $('#guestName').textContent=name; $('#tourGuest').textContent=name; if(!$('#fName').value) $('#fName').value=name; }
+function setGuest(name){ if(!name) return; $('#guestName').textContent=name; $('#tourGuest').textContent=name; $('#openGuest').textContent=name; if(!$('#fName').value) $('#fName').value=name; }
 if(guestSlug){
   // URLSearchParams already decodes; keep the guest's own casing (?to=Pak%20Budi), title-case plain slugs (?to=budi-santoso)
   const raw=guestSlug.trim().replace(/\s+/g,' ').slice(0,60);
