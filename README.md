@@ -58,6 +58,8 @@ Format link: `https://domainmu/?to=nova`. Nama tamu muncul di sampul ("Kepada Yt
 - Halaman itu juga membuat **SQL** untuk menambah tamu ke Supabase, supaya ejaan nama seperti `B&B` atau `OISHI` tampil persis.
 - Kalau slug tidak ada di database, nama diambil dari link itu sendiri (`?to=budi-santoso` menjadi "Budi Santoso").
 
+**Preview saat link dikirim (WhatsApp dll.):** gambar `web/assets/og-cover.jpg` (1200×630) beserta judul dan deskripsinya diatur lewat tag `og:` di bagian atas `index.html`. Kalau domain undangan berubah, ganti alamat di `og:url`, `og:image`, dan `og:image:secure_url`, karena WhatsApp hanya membaca alamat lengkap. WhatsApp menyimpan preview per link, jadi link yang sudah pernah dikirim sebelum ada gambar bisa tetap tampil tanpa gambar. Link tamu baru (`?to=...`) akan langsung memakai gambar ini.
+
 ## 4. Ganti foto & musik (opsional)
 Taruh file dengan nama berikut di `web/assets/`. Halaman memakainya otomatis; selama filenya belum ada, yang tampil ilustrasi:
 
