@@ -7,6 +7,7 @@ web/
   index.html        ← halaman undangan
   config.js         ← isi URL & key Supabase di sini
   tamu.html         ← pembuat link tamu + pesan WhatsApp (untuk mempelai)
+  rekap.html        ← rekap kehadiran & berapa kali link dibuka (pakai PIN)
   assets/           ← taruh foto & musik di sini (opsional)
   assets/3d/        ← model 3D (kupu-kupu, sofa, lentera, vas, pot), langit & tekstur taman, jangan dihapus
 supabase/
@@ -95,7 +96,30 @@ select hadir, count(*) as ucapan, sum(jumlah) as orang from public.rsvp group by
 update public.pengaturan set langsung_tampil = false;  -- kembali: = true
 ```
 
-## 6. Supaya Supabase tidak "tertidur"
+**Tampilan ucapan di undangan:** 6 ucapan per halaman, dengan nomor halaman di bawahnya. Angka "Orang hadir", "Masih ragu", dan "Ucapan" dihitung dari seluruh ucapan yang tampil, bukan hanya halaman yang sedang dibuka.
+
+## 6. Halaman rekap (siapa yang hadir & berapa kali link dibuka)
+Buka `https://domainmu/rekap.html`. Halaman ini dikunci PIN dan tidak muncul di Google.
+
+1. Jalankan ulang `supabase/schema.sql` di SQL Editor (aman, data lama tidak terhapus).
+2. Atur PIN, minimal 6 karakter. Jalankan perintah ini di SQL Editor (PIN tidak bisa diatur dari website):
+   ```sql
+   select public.atur_pin_rekap('pin-rahasia-kamu');
+   ```
+   Untuk mengganti PIN, jalankan lagi dengan PIN baru.
+3. Buka `rekap.html` dan masukkan PIN. Kalau salah 5 kali dari satu jaringan, halaman dikunci 15 menit.
+
+Isinya:
+- **Kehadiran:** semua RSVP (termasuk yang disembunyikan), bisa disaring Hadir / Masih ragu / Tidak hadir, dicari per nama, dan diunduh CSV.
+- **Link dibuka:** untuk tiap link `?to=...`, berapa kali dibuka, dari berapa perangkat, kapan pertama dan terakhir dibuka, dan status RSVP-nya. Ada saringan "Belum buka" dan "Buka, belum RSVP" untuk tahu siapa yang perlu diingatkan.
+
+Cara hitungnya:
+- Refresh atau buka ulang dari perangkat yang sama dalam 2 menit dihitung sekali.
+- "Perangkat" dihitung dari jaringan internet, jadi angkanya perkiraan. HP yang pindah dari WiFi ke data seluler bisa terhitung dua kali.
+- Perangkat yang sudah pernah membuka rekap tidak ikut dihitung saat membuka link tamu, supaya uji coba kamu sendiri tidak masuk hitungan. Pengaturan ini bisa dimatikan di bagian bawah halaman rekap.
+- Kalau sudah terlanjur mencoba-coba link sebelum ini, bersihkan catatannya: `delete from public.kunjungan;`
+
+## 7. Supaya Supabase tidak "tertidur"
 Project Supabase gratis dijeda kalau tidak ada aktivitas sekitar 7 hari. Datanya aman, tapi selama dijeda buku tamu tidak bisa dipakai.
 - Sebelum undangan disebar, **buka website undangan tiap 4–5 hari** sampai bagian buku tamu termuat. Itu sudah dihitung sebagai aktivitas. Pasang pengingat di HP.
 - Setelah undangan disebar, kunjungan tamu sudah menjaganya tetap aktif.

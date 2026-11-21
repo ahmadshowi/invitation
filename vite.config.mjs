@@ -1,4 +1,4 @@
-// The site lives in web/ (index.html + tamu.html); package.json stays at the repo root.
+// The site lives in web/ (index.html + tamu.html + rekap.html); package.json stays at the repo root.
 import { defineConfig, loadEnv } from 'vite';
 import { resolve } from 'node:path';
 import { cpSync, existsSync, writeFileSync } from 'node:fs';
@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
       assetsDir: 'bundle', // keep Vite's hashed files apart from web/assets
       chunkSizeWarningLimit: 1500, // three.js is large on purpose
-      rollupOptions: { input: { main: resolve(root, 'index.html'), tamu: resolve(root, 'tamu.html') } },
+      rollupOptions: { input: { main: resolve(root, 'index.html'), tamu: resolve(root, 'tamu.html'), rekap: resolve(root, 'rekap.html') } },
     },
     plugins: [copyRuntimeFiles(env)],
   };

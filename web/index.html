@@ -399,6 +399,14 @@ button,input,textarea{font:inherit;color:inherit}
 .badge.ragu{background:rgba(233,207,200,.6);color:var(--rose)}
 .wish time{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
 .empty{grid-column:1/-1;border:1px dashed var(--line-2);padding:32px;text-align:center;color:var(--muted)}
+.wishes[aria-busy="true"]{opacity:.5;transition:opacity .3s}
+.pager{display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;margin-top:24px}
+.pager[hidden]{display:none}
+.pager button{min-width:42px;height:42px;padding:0 12px;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--olive-dd);font:500 13px/1 var(--f-body);font-variant-numeric:lining-nums tabular-nums;cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+.pager button:hover:not(:disabled){border-color:var(--olive-d)}
+.pager button[aria-current]{background:var(--olive-d);border-color:var(--olive-d);color:var(--cream);cursor:default}
+.pager button:disabled:not([aria-current]){opacity:.35;cursor:default}
+.pager span{color:var(--muted);padding:0 2px}
 @media (max-width:700px){.wishes{grid-template-columns:1fr}}
 
 footer{background:var(--night);color:var(--cream);text-align:center;padding:clamp(96px,12vw,150px) 20px calc(clamp(72px,10vw,110px) + env(safe-area-inset-bottom,0px));display:grid;gap:22px;justify-items:center}
@@ -738,6 +746,7 @@ addEventListener('pageshow', () => { if (document.body.classList.contains('touri
       </div>
     </div>
     <div class="wishes" id="wishes"><div class="empty">Belum ada ucapan. Jadilah yang pertama mengisi buku tamu di atas.</div></div>
+    <nav class="pager" id="pager" aria-label="Halaman ucapan" hidden></nav>
   </div>
 </section>
 
@@ -1801,6 +1810,9 @@ if(guestSlug){
   const pretty=spaced===spaced.toLowerCase()?spaced.replace(/(^|\s)\S/g,c=>c.toUpperCase()):spaced;
   if(sb){ sb.rpc('get_guest',{p_slug:guestSlug}).then(({data,error})=>setGuest(!error&&data?data:pretty)); }
   else setGuest(pretty);
+  // catat link dibuka (lihat rekap.html); perangkat mempelai yang sudah login rekap tidak ikut dihitung
+  let admin=false; try{ admin=localStorage.getItem('undangan:admin')==='1'; }catch(_){}
+  if(sb && !admin) sb.rpc('catat_buka',{p_slug:guestSlug}).then(()=>{},()=>{});
 }
 
 const form=$('#rsvpForm'), err=$('#err'); let cur=1, jumlah=1;
@@ -1815,7 +1827,8 @@ $('#again').onclick=()=>{ form.reset(); jumlah=1; $('#jumlah').textContent=1; $(
 
 let remote=[], local=[];
 async function save(row){
-  if(mode==='supabase'){ const {error}=await sb.from('rsvp').insert({ guest_slug:guestSlug, nama:row.nama, hadir:row.hadir, jumlah:row.jumlah, pesan:row.pesan }); if(error) throw error; loadRemote(); return true; }
+  if(mode==='supabase'){ const {error}=await sb.from('rsvp').insert({ guest_slug:guestSlug, nama:row.nama, hadir:row.hadir, jumlah:row.jumlah, pesan:row.pesan }); if(error) throw error; page=1; loadRemote(); return true; }
+  if(mode==='artifact') page=1;
   if(mode==='artifact'){ try{ await adb.collection('ucapan').add(row); return true; }catch(e){ return false; } }
   return false;
 }
@@ -1838,7 +1851,7 @@ form.addEventListener('submit',async e=>{
   const nb=$('#next'); nb.disabled=true; let shared=false;
   if($('#fWeb').value){ shared=true; } // bot mengisi kolom tersembunyi: pura-pura berhasil, tidak disimpan
   else try{ shared=await save(row); }catch(ex){ nb.disabled=false; err.textContent=saveError(ex); return; }
-  nb.disabled=false; if(!shared){ local.unshift(row); render(); }
+  nb.disabled=false; if(!shared){ local.unshift(row); page=1; render(); }
   const first=row.nama.split(' ')[0];
   $('#doneTitle').textContent=row.hadir==='hadir'?`Sampai jumpa, ${first}!`:`Terima kasih, ${first}.`;
   $('#doneText').textContent=shared?'Ucapan Anda sudah masuk ke buku tamu.':'Mode pratinjau: ucapan ini hanya tampil di perangkat Anda.';
@@ -1846,19 +1859,57 @@ form.addEventListener('submit',async e=>{
 });
 const label={hadir:'Hadir',ragu:'Masih ragu',tidak:'Tidak hadir'};
 function ago(t){ const s=(Date.now()-t)/1000; if(s<60) return 'baru saja'; if(s<3600) return Math.floor(s/60)+' menit lalu'; if(s<86400) return Math.floor(s/3600)+' jam lalu'; return new Date(t).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}); }
+/* ucapan per halaman: Supabase mengambil satu halaman saja; mode lain memotong daftar di sini */
+const PER=6; let page=1, total=0, pageRows=[], tally=null;
+function card(w){ const el=document.createElement('article'); el.className='wish'; const hd=document.createElement('header'); const nm=document.createElement('strong'); nm.textContent=String(w.nama||'Tamu');
+  const hv=label[w.hadir]?w.hadir:'ragu'; const bd=document.createElement('span'); bd.className='badge '+hv; bd.textContent=label[hv]+(hv==='hadir'&&w.jumlah>1?` · ${w.jumlah} orang`:'');
+  hd.append(nm,bd); const p=document.createElement('p'); p.textContent=String(w.pesan||''); const tm=document.createElement('time'); tm.textContent=ago(+w.t||Date.now()); el.append(hd,p,tm); return el; }
+function countUp(list){ return { hadir:list.filter(w=>w.hadir==='hadir').reduce((s,w)=>s+(+w.jumlah||1),0), ragu:list.filter(w=>w.hadir==='ragu').length, ucapan:list.length }; }
 function render(){
-  const all=[...local,...remote].sort((a,b)=>b.t-a.t), box=$('#wishes'); box.textContent='';
-  if(!all.length){ const em=document.createElement('div'); em.className='empty'; em.textContent='Belum ada ucapan. Jadilah yang pertama mengisi buku tamu di atas.'; box.appendChild(em); }
-  all.forEach(w=>{ const el=document.createElement('article'); el.className='wish'; const hd=document.createElement('header'); const nm=document.createElement('strong'); nm.textContent=String(w.nama||'Tamu');
-    const hv=label[w.hadir]?w.hadir:'ragu'; const bd=document.createElement('span'); bd.className='badge '+hv; bd.textContent=label[hv]+(hv==='hadir'&&w.jumlah>1?` · ${w.jumlah} orang`:'');
-    hd.append(nm,bd); const p=document.createElement('p'); p.textContent=String(w.pesan||''); const tm=document.createElement('time'); tm.textContent=ago(+w.t||Date.now()); el.append(hd,p,tm); box.appendChild(el); });
-  $('#tHadir').textContent=all.filter(w=>w.hadir==='hadir').reduce((s,w)=>s+(+w.jumlah||1),0);
-  $('#tRagu').textContent=all.filter(w=>w.hadir==='ragu').length; $('#tUcapan').textContent=all.length;
+  let rows=pageRows, t=tally;
+  if(mode!=='supabase'){ const all=[...local,...remote].sort((a,b)=>b.t-a.t); total=all.length; page=Math.min(page,Math.max(1,Math.ceil(total/PER))); rows=all.slice((page-1)*PER,page*PER); t=countUp(all); }
+  const box=$('#wishes'); box.textContent=''; box.removeAttribute('aria-busy');
+  if(!rows.length){ const em=document.createElement('div'); em.className='empty'; em.textContent='Belum ada ucapan. Jadilah yang pertama mengisi buku tamu di atas.'; box.appendChild(em); }
+  rows.forEach(w=>box.appendChild(card(w)));
+  if(t){ $('#tHadir').textContent=t.hadir; $('#tRagu').textContent=t.ragu; $('#tUcapan').textContent=t.ucapan; }
+  renderPager();
 }
+// 1 … 4 5 6 … 12
+function pageList(c,n){
+  if(n<=7) return Array.from({length:n},(_,i)=>i+1);
+  const s=new Set([1,n,c-1,c,c+1]); if(c<=3) [2,3,4].forEach(x=>s.add(x)); if(c>=n-2) [n-3,n-2,n-1].forEach(x=>s.add(x));
+  const nums=[...s].filter(x=>x>=1&&x<=n).sort((a,b)=>a-b), out=[];
+  nums.forEach((x,i)=>{ if(i&&x-nums[i-1]>1) out.push('…'); out.push(x); }); return out;
+}
+function renderPager(){
+  const nav=$('#pager'), pages=Math.ceil(total/PER); nav.textContent=''; nav.hidden=pages<2; if(pages<2) return;
+  const btn=(text,p,aria,num)=>{ const b=document.createElement('button'); b.type='button'; b.textContent=text; b.setAttribute('aria-label',aria);
+    if(num&&p===page){ b.setAttribute('aria-current','page'); b.disabled=true; } else if(p<1||p>pages) b.disabled=true; else b.onclick=()=>goPage(p); return b; };
+  nav.append(btn('‹',page-1,'Halaman sebelumnya'));
+  pageList(page,pages).forEach(p=>{ if(p==='…'){ const s=document.createElement('span'); s.textContent='…'; nav.append(s); } else nav.append(btn(String(p),p,'Halaman '+p,true)); });
+  nav.append(btn('›',page+1,'Halaman berikutnya'));
+}
+function goPage(p){
+  page=p; const head=$('.wishes-head');
+  if(lenis) lenis.scrollTo(head,{offset:-96,duration:1}); else scrollTo({top:head.getBoundingClientRect().top+scrollY-96,behavior:reduce?'auto':'smooth'});
+  if(mode==='supabase'){ $('#wishes').setAttribute('aria-busy','true'); loadRemote(); } else render();
+}
+async function loadTally(){
+  const r=await sb.rpc('ringkasan_ucapan');
+  if(!r.error&&r.data){ tally=r.data; return; }
+  // schema.sql lama (belum ada ringkasan_ucapan): hitung dari kolom ringan saja
+  const {data}=await sb.from('rsvp').select('hadir,jumlah').limit(1000); if(data) tally=countUp(data);
+}
+let loadSeq=0;
 async function loadRemote(){
-  const {data,error}=await sb.from('rsvp').select('nama,hadir,jumlah,pesan,created_at').order('created_at',{ascending:false}).limit(300);
-  if(error){ $('#modeNote').textContent='Buku tamu sedang tidak bisa dimuat.'; return; }
-  remote=data.map(r=>({...r,t:Date.parse(r.created_at)})); render(); $('#modeNote').textContent='Ucapan tersimpan dan terlihat oleh semua tamu.';
+  const seq=++loadSeq, from=(page-1)*PER;
+  const [res]=await Promise.all([ sb.from('rsvp').select('nama,hadir,jumlah,pesan,created_at',{count:'exact'}).order('created_at',{ascending:false}).range(from,from+PER-1), loadTally().catch(()=>{}) ]);
+  if(seq!==loadSeq) return;
+  const {data,error,count}=res;
+  // halaman ini sudah tidak ada (ucapan disembunyikan): kembali ke halaman terakhir
+  if(page>1 && (error&&error.code==='PGRST103' || !error&&!data.length)){ page=Math.max(1,Math.ceil((count||0)/PER)); return loadRemote(); }
+  if(error){ $('#wishes').removeAttribute('aria-busy'); $('#modeNote').textContent='Buku tamu sedang tidak bisa dimuat.'; return; }
+  total=count??data.length; pageRows=data.map(r=>({...r,t:Date.parse(r.created_at)})); render(); $('#modeNote').textContent='Ucapan tersimpan dan terlihat oleh semua tamu.';
 }
 render();
 if(mode==='supabase'){

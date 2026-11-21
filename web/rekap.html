@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rekap Tamu · Rayana & Hasna</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..600&family=Jost:wght@400;500&display=swap">
+<style>
+:root{--paper:#FFF7EA;--cream:#FFEDD2;--olive:#8F8E52;--olive-d:#66653A;--olive-dd:#4B4A2A;--ink:#33321F;--muted:#6E6C51;--line:rgba(75,74,42,.18);--line-2:rgba(75,74,42,.32);--blush:#E9CFC8;--rose:#9A5B4E;color-scheme:light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 Jost,"Helvetica Neue",system-ui,sans-serif;padding:clamp(36px,6vw,80px) max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px));-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+main{max-width:1040px;margin:0 auto;display:grid;gap:22px}
+.kicker{font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+h1{font:700 clamp(36px,5vw,56px)/1.05 "Playfair Display",Georgia,serif;letter-spacing:-.01em;margin:0}
+h1 em{color:var(--olive)}
+.top{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.card{background:#fff;border:1px solid var(--line);padding:clamp(18px,3vw,30px);display:grid;gap:14px;min-width:0}
+label.cap{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:500}
+input[type=password],input[type=search],input[type=text]{width:100%;font:inherit;border:1px solid var(--line);padding:12px 14px;background:var(--paper);color:var(--ink);border-radius:0}
+input:focus{outline:0;border-color:var(--olive-d)}
+.check{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--muted);cursor:pointer}
+.check input{accent-color:var(--olive-d);width:16px;height:16px}
+.muted{color:var(--muted);font-size:13px;margin:0}
+.err{color:var(--rose);font-size:14px;margin:0;min-height:1.4em}
+code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:var(--paper);padding:2px 6px;word-break:break-all}
+button{font:500 10.5px Jost,sans-serif;letter-spacing:.24em;text-transform:uppercase;border:1px solid var(--olive-d);border-radius:999px;padding:11px 18px;background:var(--olive-d);color:var(--cream);cursor:pointer;white-space:nowrap}
+button:hover{background:var(--olive-dd)}
+button:disabled{opacity:.5;cursor:default}
+button.ghost{background:transparent;color:var(--olive-dd);border-color:var(--line-2)}
+button.ghost:hover{background:var(--olive-d);color:var(--cream)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.login{max-width:440px}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.stat{background:#fff;padding:18px 20px}
+.stat b{display:block;font:600 34px/1.05 "Playfair Display",Georgia,serif;font-variant-numeric:lining-nums tabular-nums}
+.stat b small{font-size:.5em;color:var(--muted);font-weight:500}
+.stat span{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--line)}
+.tabs button{background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0;color:var(--muted);padding:12px 4px;margin-right:24px;letter-spacing:.22em}
+.tabs button:hover{background:transparent;color:var(--olive-dd)}
+.tabs button[aria-selected=true]{color:var(--olive-dd);border-bottom-color:var(--olive-d)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tools input{flex:1 1 220px;width:auto}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{background:transparent;color:var(--olive-dd);border-color:var(--line-2);padding:8px 14px;letter-spacing:.16em}
+.chips button:hover{background:rgba(143,142,82,.12)}
+.chips button[aria-pressed=true]{background:var(--olive-d);color:var(--cream);border-color:var(--olive-d)}
+.chips button i{font-style:normal;opacity:.7;margin-left:6px}
+
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.24em;font-weight:500;white-space:nowrap}
+td.name{font:600 17px/1.3 "Playfair Display",Georgia,serif;min-width:130px}
+td.name small{display:block;font:400 12px Jost,sans-serif;color:var(--muted);margin-top:2px;word-break:break-all}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+td.msg{color:var(--muted);max-width:360px;overflow-wrap:anywhere;white-space:pre-line}
+td.when{white-space:nowrap;color:var(--muted);font-size:13px}
+.big{font:600 20px "Playfair Display",Georgia,serif}
+.badge{display:inline-block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:rgba(143,142,82,.16);color:var(--olive-dd);white-space:nowrap}
+.badge.ragu{background:rgba(233,207,200,.7);color:var(--rose)}
+.badge.tidak,.badge.none{background:rgba(75,74,42,.07);color:var(--muted)}
+.badge.hide{background:transparent;border:1px dashed var(--line-2);color:var(--muted);margin-left:6px}
+tr.zero td{opacity:.62}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line-2)}
+.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+
+/* HP: baris tabel jadi kartu */
+@media (max-width:680px){
+  thead{display:none}
+  table,tbody,tr,td{display:block;width:100%}
+  tr{border-bottom:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:1fr 1fr;column-gap:12px}
+  td{border:0;padding:4px 0}
+  td.name,td.msg{grid-column:1/-1}
+  td[data-label]::before{content:attr(data-label);display:block;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  td.msg{max-width:none}
+}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div><p class="kicker">Untuk mempelai · jangan dibagikan</p><h1>Rekap <em>tamu</em></h1></div>
+    <div class="row" id="topActions" hidden>
+      <button class="ghost" id="reload" type="button">Muat ulang</button>
+      <button class="ghost" id="logout" type="button">Keluar</button>
+    </div>
+  </div>
+
+  <form class="card login" id="login">
+    <label class="cap" for="pin">PIN rekap</label>
+    <input id="pin" type="password" autocomplete="current-password" required>
+    <label class="check"><input type="checkbox" id="remember" checked> Ingat di perangkat ini</label>
+    <p class="err" id="loginErr" role="alert"></p>
+    <div><button type="submit" id="loginBtn">Buka rekap</button></div>
+    <p class="muted">Belum punya PIN? Jalankan di Supabase → SQL Editor:<br><code>select public.atur_pin_rekap('pin-rahasia-kamu');</code></p>
+  </form>
+
+  <div id="dash" hidden>
+    <div style="display:grid;gap:22px">
+      <div class="stats" id="stats"></div>
+
+      <div class="card">
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" id="tabRsvp" aria-selected="true" data-tab="rsvp">Kehadiran</button>
+          <button type="button" role="tab" id="tabLink" aria-selected="false" data-tab="link">Link dibuka</button>
+        </div>
+        <div class="tools">
+          <input type="search" id="q" placeholder="Cari nama…" aria-label="Cari nama">
+          <button class="ghost" id="csv" type="button">Unduh CSV</button>
+        </div>
+        <div class="chips" id="chips"></div>
+        <div id="table"></div>
+      </div>
+
+      <div class="foot">
+        <label class="check"><input type="checkbox" id="noCount"> Jangan hitung saat perangkat ini membuka link tamu</label>
+        <p class="muted" id="updated"></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const CFG = Object.assign({ supabaseUrl: '', supabaseAnonKey: '' }, window.WEDDING_CONFIG || {});
+const store = { get(k){ try{ return localStorage.getItem(k); }catch(_){ return null; } }, set(k,v){ try{ v==null?localStorage.removeItem(k):localStorage.setItem(k,v); }catch(_){} } };
+const PIN_KEY='undangan:rekap-pin', ADMIN_KEY='undangan:admin';
+let sb=null, pin='', data=null, tab='rsvp', filter='semua';
+
+if(CFG.supabaseUrl && CFG.supabaseAnonKey && window.supabase) sb=window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey);
+else { $('#loginErr').textContent='Supabase belum diatur di config.js.'; $('#loginBtn').disabled=true; }
+
+const STATUS={hadir:'Hadir',ragu:'Masih ragu',tidak:'Tidak hadir'};
+const fmt=t=>t?new Date(t).toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
+const pretty=s=>{ const sp=String(s||'').replace(/[-_+]/g,' ').replace(/\s+/g,' ').trim(); return sp.replace(/(^|\s)\S/g,c=>c.toUpperCase()); };
+const el=(tag,props,...kids)=>{ const n=document.createElement(tag); if(props) for(const k in props){ if(k==='class') n.className=props[k]; else if(k==='label') n.dataset.label=props[k]; else n.setAttribute(k,props[k]); } kids.flat().forEach(c=>c!=null&&n.append(c)); return n; };
+const badge=h=>el('span',{class:'badge '+(STATUS[h]?h:'none')},STATUS[h]||'Belum RSVP');
+
+async function fetchRekap(p){
+  const {data:res,error}=await sb.rpc('rekap',{p_pin:p});
+  if(error){ if(error.code==='PGRST202'||/rekap/.test(error.message||'')&&/function/i.test(error.message||'')) throw new Error('Fungsi rekap belum ada. Jalankan ulang supabase/schema.sql di SQL Editor.'); throw new Error('Gagal memuat. Periksa koneksi lalu coba lagi.'); }
+  if(res&&res.error==='pin') throw Object.assign(new Error('PIN salah.'),{pin:true});
+  if(res&&res.error==='rate') throw new Error('Terlalu banyak percobaan PIN. Coba lagi 15 menit lagi.');
+  if(res&&res.error==='nopin') throw new Error('PIN rekap belum diatur. Jalankan perintah di bawah di SQL Editor.');
+  return res;
+}
+
+function prep(res){
+  const rsvp=(res.rsvp||[]).map(r=>({...r,t:Date.parse(r.created_at)}));
+  // RSVP terbaru per link tamu (atau per nama yang sama persis)
+  const bySlug={}, byName={};
+  rsvp.forEach(r=>{ if(r.guest_slug&&!bySlug[r.guest_slug]) bySlug[r.guest_slug]=r; const k=String(r.nama).toLowerCase(); if(!byName[k]) byName[k]=r; });
+  const tamu=(res.tamu||[]).map(g=>{ const nama=g.nama||pretty(g.slug); return {...g,nama,rsvp:bySlug[g.slug]||byName[nama.toLowerCase()]||null}; });
+  return {rsvp,tamu};
+}
+
+function renderStats(){
+  const {rsvp,tamu}=data, hadir=rsvp.filter(r=>r.hadir==='hadir');
+  const reg=tamu.filter(g=>g.terdaftar), regOpen=reg.filter(g=>g.dibuka>0).length;
+  const items=[
+    [hadir.reduce((s,r)=>s+(+r.jumlah||1),0),'Orang hadir'],
+    [hadir.length,'Konfirmasi hadir'],
+    [rsvp.filter(r=>r.hadir==='ragu').length,'Masih ragu'],
+    [rsvp.filter(r=>r.hadir==='tidak').length,'Tidak hadir'],
+    [reg.length?[regOpen,' / '+reg.length]:tamu.filter(g=>g.dibuka>0).length,'Tamu sudah buka link'],
+    [tamu.reduce((s,g)=>s+g.dibuka,0),'Total link dibuka'],
+  ];
+  $('#stats').replaceChildren(...items.map(([v,l])=>el('div',{class:'stat'},el('b',null,Array.isArray(v)?[String(v[0]),el('small',null,v[1])]:String(v)),el('span',null,l))));
+}
+
+const CHIPS={
+  rsvp:[['semua','Semua',()=>true],['hadir','Hadir',r=>r.hadir==='hadir'],['ragu','Masih ragu',r=>r.hadir==='ragu'],['tidak','Tidak hadir',r=>r.hadir==='tidak']],
+  link:[['semua','Semua',()=>true],['buka','Sudah buka',g=>g.dibuka>0],['belum','Belum buka',g=>!g.dibuka],['norsvp','Buka, belum RSVP',g=>g.dibuka>0&&!g.rsvp]],
+};
+function rows(){
+  const q=$('#q').value.trim().toLowerCase(), list=tab==='rsvp'?data.rsvp:data.tamu, f=CHIPS[tab].find(c=>c[0]===filter)[2];
+  return list.filter(f).filter(x=>!q||String(x.nama).toLowerCase().includes(q)||String(x.slug||x.guest_slug||'').includes(q));
+}
+function renderChips(){
+  const list=tab==='rsvp'?data.rsvp:data.tamu;
+  $('#chips').replaceChildren(...CHIPS[tab].map(([k,l,f])=>{ const b=el('button',{type:'button','aria-pressed':String(k===filter)},l,el('i',null,String(list.filter(f).length))); b.onclick=()=>{ filter=k; renderChips(); renderTable(); }; return b; }));
+}
+function renderTable(){
+  const list=rows(), box=$('#table');
+  if(!list.length){ box.replaceChildren(el('div',{class:'empty'},tab==='rsvp'?'Belum ada RSVP di sini.':'Belum ada link di sini.')); return; }
+  let head, body;
+  if(tab==='rsvp'){
+    head=['Nama','Status','Orang','Ucapan','Dikirim'];
+    body=list.map(r=>el('tr',null,
+      el('td',{class:'name'},String(r.nama),r.guest_slug?el('small',null,'via link ?to='+r.guest_slug):null),
+      el('td',{label:'Status'},badge(r.hadir),r.tampil?null:el('span',{class:'badge hide',title:'Tidak tampil di website'},'Disembunyikan')),
+      el('td',{class:'num big',label:'Orang'},r.hadir==='tidak'?'—':String(r.jumlah)),
+      el('td',{class:'msg',label:'Ucapan'},String(r.pesan||'')),
+      el('td',{class:'when',label:'Dikirim'},fmt(r.t))));
+  } else {
+    head=['Nama','Dibuka','Perangkat','Pertama buka','Terakhir buka','RSVP'];
+    const sorted=[...list].sort((a,b)=>b.dibuka-a.dibuka||String(a.nama).localeCompare(b.nama,'id'));
+    body=sorted.map(g=>el('tr',{class:g.dibuka?'':'zero'},
+      el('td',{class:'name'},String(g.nama),el('small',null,'?to='+g.slug+(g.terdaftar?'':' · tidak terdaftar'))),
+      el('td',{class:'num big',label:'Dibuka'},g.dibuka?g.dibuka+'×':'Belum'),
+      el('td',{class:'num',label:'Perangkat'},String(g.perangkat||0)),
+      el('td',{class:'when',label:'Pertama buka'},fmt(g.pertama)),
+      el('td',{class:'when',label:'Terakhir buka'},fmt(g.terakhir)),
+      el('td',{label:'RSVP'},badge(g.rsvp&&g.rsvp.hadir),g.rsvp&&g.rsvp.hadir==='hadir'?' '+g.rsvp.jumlah+' org':null)));
+  }
+  box.replaceChildren(el('table',null,el('thead',null,el('tr',null,head.map(h=>el('th',null,h)))),el('tbody',null,body)));
+}
+function renderAll(){ renderStats(); renderChips(); renderTable(); $('#updated').textContent='Diperbarui '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}); }
+
+function setTab(t){ tab=t; filter='semua'; document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===t))); renderChips(); renderTable(); }
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+$('#q').addEventListener('input',renderTable);
+
+function showDash(on){ $('#login').hidden=on; $('#dash').hidden=!on; $('#topActions').hidden=!on; }
+async function unlock(p,{silent}={}){
+  const btn=$('#loginBtn'); btn.disabled=true; $('#loginErr').textContent='';
+  try{
+    data=prep(await fetchRekap(p)); pin=p;
+    if($('#remember').checked) store.set(PIN_KEY,p);
+    if(store.get(ADMIN_KEY)==null) store.set(ADMIN_KEY,'1'); // perangkat mempelai tidak ikut dihitung
+    $('#noCount').checked=store.get(ADMIN_KEY)==='1';
+    showDash(true); renderAll();
+  }catch(e){
+    if(e.pin) store.set(PIN_KEY,null);
+    showDash(false); if(!silent||!e.pin) $('#loginErr').textContent=e.message;
+  }finally{ btn.disabled=!sb; }
+}
+$('#login').addEventListener('submit',e=>{ e.preventDefault(); const p=$('#pin').value; if(p) unlock(p); });
+$('#reload').onclick=async()=>{ const b=$('#reload'); b.disabled=true; try{ data=prep(await fetchRekap(pin)); renderAll(); }catch(e){ alert(e.message); } b.disabled=false; };
+$('#logout').onclick=()=>{ store.set(PIN_KEY,null); pin=''; data=null; $('#pin').value=''; showDash(false); };
+$('#noCount').onchange=e=>store.set(ADMIN_KEY,e.target.checked?'1':'0');
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&pin&&data) fetchRekap(pin).then(r=>{ data=prep(r); renderAll(); },()=>{}); });
+
+$('#csv').onclick=()=>{
+  const list=rows(), q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const lines=tab==='rsvp'
+    ? [['Nama','Status','Orang','Ucapan','Dikirim','Link','Tampil'],...list.map(r=>[r.nama,STATUS[r.hadir]||r.hadir,r.jumlah,r.pesan,fmt(r.t),r.guest_slug||'',r.tampil?'ya':'tidak'])]
+    : [['Nama','Slug','Terdaftar','Dibuka','Perangkat','Pertama buka','Terakhir buka','RSVP','Orang'],...list.map(g=>[g.nama,g.slug,g.terdaftar?'ya':'tidak',g.dibuka,g.perangkat,fmt(g.pertama),fmt(g.terakhir),g.rsvp?STATUS[g.rsvp.hadir]:'Belum',g.rsvp?g.rsvp.jumlah:''])];
+  const blob=new Blob(['﻿'+lines.map(l=>l.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'});
+  const a=el('a',{href:URL.createObjectURL(blob),download:(tab==='rsvp'?'rekap-kehadiran':'rekap-link-dibuka')+'.csv'}); document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+};
+
+const saved=store.get(PIN_KEY);
+if(sb&&saved){ $('#pin').value=saved; unlock(saved,{silent:true}); }
+})();
+</script>
+</body>
+</html>

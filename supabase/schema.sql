@@ -142,7 +142,142 @@ do $$ begin
   alter publication supabase_realtime add table public.rsvp;
 exception when duplicate_object then null; end $$;
 
--- 7) Contoh tamu
+-- 7) Angka di bawah buku tamu (orang hadir, masih ragu, jumlah ucapan).
+--    Dihitung di database supaya tetap benar walaupun ucapan ditampilkan per halaman.
+--    Bukan security definer: aturan RLS tetap berlaku, jadi yang dihitung hanya ucapan yang tampil.
+create or replace function public.ringkasan_ucapan()
+returns json language sql stable set search_path = public as $$
+  select json_build_object(
+    'hadir',  coalesce(sum(jumlah) filter (where hadir = 'hadir'), 0),
+    'ragu',   count(*) filter (where hadir = 'ragu'),
+    'ucapan', count(*)
+  ) from public.rsvp where tampil;
+$$;
+grant execute on function public.ringkasan_ucapan() to anon, authenticated;
+
+-- 8) Catatan buka undangan + halaman rekap (rekap.html)
+--    Setiap link tamu (?to=nova) yang dibuka dicatat. Isinya hanya slug, waktu, dan sidik IP yang di-hash.
+create table if not exists public.kunjungan (
+  id          bigint generated always as identity primary key,
+  slug        text not null check (char_length(slug) between 1 and 60),
+  ip_hash     text,
+  created_at  timestamptz not null default now()
+);
+create index if not exists kunjungan_slug_idx on public.kunjungan (slug, created_at desc);
+create index if not exists kunjungan_created_idx on public.kunjungan (created_at desc);
+alter table public.kunjungan enable row level security;  -- tanpa policy: hanya lewat fungsi di bawah
+
+-- PIN halaman rekap disimpan sebagai hash, bukan PIN aslinya
+alter table public.pengaturan add column if not exists rekap_pin text;
+
+-- Catatan PIN salah, untuk mengerem tebak-tebakan PIN
+create table if not exists public.rekap_log (
+  ip_hash     text not null,
+  created_at  timestamptz not null default now()
+);
+alter table public.rekap_log enable row level security;
+
+create or replace function public._ip_hash()
+returns text language plpgsql stable set search_path = public as $$
+declare hdr json; ip text;
+begin
+  begin
+    hdr := current_setting('request.headers', true)::json;
+  exception when others then return null;
+  end;
+  ip := coalesce(hdr->>'cf-connecting-ip', nullif(btrim(split_part(hdr->>'x-forwarded-for', ',', 1)), ''), hdr->>'x-real-ip');
+  return case when ip is null then null else md5('undangan:' || ip) end;
+end $$;
+revoke execute on function public._ip_hash() from public, anon, authenticated;
+
+create or replace function public._hash_pin(p_pin text)
+returns text language sql immutable as $$
+  select encode(sha256(convert_to('undangan-rekap:' || coalesce(p_pin, ''), 'UTF8')), 'hex');
+$$;
+revoke execute on function public._hash_pin(text) from public, anon, authenticated;
+
+-- Dipanggil halaman undangan setiap kali link tamu dibuka
+create or replace function public.catat_buka(p_slug text)
+returns void language plpgsql security definer set search_path = public as $$
+declare
+  s  text := lower(btrim(regexp_replace(coalesce(p_slug, ''), '\s+', ' ', 'g')));
+  ih text := public._ip_hash();
+begin
+  if char_length(s) not between 1 and 60 then return; end if;
+  -- refresh / buka ulang dari perangkat yang sama dalam 2 menit dihitung sekali
+  if ih is not null and exists (select 1 from kunjungan where slug = s and ip_hash = ih and created_at > now() - interval '2 minutes') then
+    return;
+  end if;
+  -- rem untuk yang iseng: maks. 20 catatan per jaringan per 10 menit, 200 per menit untuk seluruh website
+  if ih is not null and (select count(*) from kunjungan where ip_hash = ih and created_at > now() - interval '10 minutes') >= 20 then
+    return;
+  end if;
+  if (select count(*) from kunjungan where created_at > now() - interval '1 minute') >= 200 then
+    return;
+  end if;
+  insert into kunjungan (slug, ip_hash) values (s, ih);
+end $$;
+grant execute on function public.catat_buka(text) to anon, authenticated;
+
+-- Atur PIN rekap. Hanya bisa dijalankan dari SQL Editor, tidak dari website:
+--   select public.atur_pin_rekap('pin-rahasia-kamu');
+create or replace function public.atur_pin_rekap(p_pin text)
+returns text language plpgsql security definer set search_path = public as $$
+begin
+  if char_length(coalesce(p_pin, '')) < 6 then
+    raise exception 'PIN minimal 6 karakter';
+  end if;
+  update pengaturan set rekap_pin = public._hash_pin(p_pin) where id = 1;
+  return 'PIN rekap tersimpan';
+end $$;
+revoke execute on function public.atur_pin_rekap(text) from public, anon, authenticated;
+
+-- Data halaman rekap: semua RSVP (termasuk yang disembunyikan) + berapa kali tiap link dibuka.
+-- PIN salah tidak membuka apa pun; setelah 5 kali salah dari satu jaringan, dikunci 15 menit.
+create or replace function public.rekap(p_pin text)
+returns json language plpgsql security definer set search_path = public as $$
+declare
+  ih     text := coalesce(public._ip_hash(), 'tanpa-ip');
+  stored text;
+begin
+  delete from rekap_log where created_at < now() - interval '1 day';
+  if (select count(*) from rekap_log where ip_hash = ih and created_at > now() - interval '15 minutes') >= 5
+     or (select count(*) from rekap_log where created_at > now() - interval '15 minutes') >= 50 then
+    return json_build_object('error', 'rate');
+  end if;
+
+  select rekap_pin into stored from pengaturan where id = 1;
+  if stored is null then
+    return json_build_object('error', 'nopin');
+  end if;
+  if public._hash_pin(p_pin) <> stored then
+    insert into rekap_log (ip_hash) values (ih);
+    return json_build_object('error', 'pin');
+  end if;
+
+  return json_build_object(
+    'tamu', coalesce((
+      select json_agg(t order by t.terakhir desc nulls last, t.nama)
+      from (
+        select coalesce(g.slug, k.slug) as slug, g.name as nama, (g.slug is not null) as terdaftar,
+               coalesce(k.dibuka, 0) as dibuka, coalesce(k.perangkat, 0) as perangkat, k.pertama, k.terakhir
+        from public.guests g
+        full join (
+          select slug, count(*) as dibuka, count(distinct ip_hash) as perangkat,
+                 min(created_at) as pertama, max(created_at) as terakhir
+          from public.kunjungan group by slug
+        ) k on k.slug = g.slug
+      ) t
+    ), '[]'::json),
+    'rsvp', coalesce((
+      select json_agg(r order by r.created_at desc)
+      from (select nama, hadir, jumlah, pesan, tampil, guest_slug, created_at from public.rsvp) r
+    ), '[]'::json)
+  );
+end $$;
+grant execute on function public.rekap(text) to anon, authenticated;
+
+-- 9) Contoh tamu
 insert into public.guests (slug, name) values
   ('nova',  'Nova'),
   ('bnb',   'B&B'),
@@ -152,6 +287,12 @@ on conflict (slug) do update set name = excluded.name;
 -- =========================================================
 --  Perintah yang berguna (jalankan kapan saja di SQL Editor)
 -- =========================================================
+-- Atur / ganti PIN halaman rekap (domainmu/rekap.html), minimal 6 karakter:
+--   select public.atur_pin_rekap('pin-rahasia-kamu');
+--
+-- Hapus catatan buka link (misalnya setelah kamu sendiri mencoba-coba link tamu):
+--   delete from public.kunjungan;
+--
 -- Rekap kehadiran lengkap (termasuk yang disembunyikan):
 --   select hadir, count(*) as ucapan, sum(jumlah) as orang from public.rsvp group by hadir;
 --
